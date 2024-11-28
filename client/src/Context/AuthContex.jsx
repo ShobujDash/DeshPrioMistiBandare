@@ -1,10 +1,34 @@
-import { createContext, useContext } from "react";
+import axios from "axios";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext(null);
 
 const AuthContextProvider = ({ children }) => {
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const { data } = await axios.get("/api/user/getProfile");
+
+        if (data?.success) {
+          setUser(data.data)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    
+    }
+    fetchUserData();
+  },[])
+
+
+
+
   const Auth = {
-    isAuthenticated: false,
+    user,
+    setUser
   };
 
   return <AuthContext.Provider value={Auth}>{children}</AuthContext.Provider>;

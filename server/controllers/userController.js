@@ -1,8 +1,9 @@
-const bcrypt = require("bcrypt") 
-const { v2  } = require("cloudinary") 
-const jwt  =require("jsonwebtoken") 
-const validator  =require("validator") 
-const userModel  =require("../models/userModel") 
+const bcrypt = require("bcrypt");
+const { v2 } = require("cloudinary");
+const jwt = require("jsonwebtoken");
+const validator = require("validator");
+const cookieToken = require("../utils/cookieToken");
+const UserModel = require("../models/userModel");
 
 // API to register user
 const registerUser = async (req, res, next) => {
@@ -23,6 +24,15 @@ const registerUser = async (req, res, next) => {
       return res.json({ success: false, message: "enter a strong password" });
     }
 
+    // isExist user
+    const isExistUser = await UserModel.findOne({ email });
+
+    if (isExistUser) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User has already exist" });
+    }
+
     // hashing user password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -33,12 +43,10 @@ const registerUser = async (req, res, next) => {
       password: hashedPassword,
     };
 
-    const newUser = new userModel(userData);
+    const newUser = new UserModel(userData);
     const user = await newUser.save();
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECREAT);
-
-    res.status(201).json({ success: true, token });
+    cookieToken(user, res);
   } catch (error) {
     next(error);
   }
@@ -49,7 +57,7 @@ const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    const user = await userModel.findOne({ email });
+    const user = await UserModel.findOne({ email });
 
     if (!user) {
       return res
@@ -58,13 +66,28 @@ const loginUser = async (req, res, next) => {
     }
     const isMatch = await bcrypt.compare(password, user?.password);
     if (isMatch) {
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECREAT);
-      res.status(200).json({ success: true, token });
+      cookieToken(user, res);
     } else {
       res.status(400).json({ success: false, message: "invalid credentials" });
     }
   } catch (error) {
     next(error);
+  }
+};
+
+// get Profile data
+const UserProfileDetails = async (req,res) => {
+  try {
+    let user_id = req.headers.id;
+
+    let data = await UserModel.find({ _id: user_id });
+    console.log(data)
+     res.status(200).json({
+       success: true,
+       data:data[0]
+     });
+  } catch (error) {
+    return { status: "fail", message: "Something went wrong" };
   }
 };
 
@@ -118,4 +141,5 @@ const loginUser = async (req, res, next) => {
 module.exports = {
   loginUser,
   registerUser,
+  UserProfileDetails,
 };

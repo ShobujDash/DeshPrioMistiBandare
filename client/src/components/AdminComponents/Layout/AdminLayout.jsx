@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
     setToggle(!toggle);
   };
 
-  console.log(toggle);
+
 
   return (
     <>

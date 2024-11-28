@@ -3,24 +3,30 @@ import logo from "../../assets/rasgulla.png";
 
 import { CgMenuBoxed, CgProfile } from "react-icons/cg";
 import { FaBars, FaXmark } from "react-icons/fa6";
-import { MdLogout, MdOutlineInfo, MdShoppingBasket } from "react-icons/md";
+import {
+  MdLogin,
+  MdLogout,
+  MdOutlineInfo,
+  MdShoppingBasket,
+} from "react-icons/md";
+
+import { motion } from "framer-motion";
 import { RiHome3Line } from "react-icons/ri";
 import { RxDashboard } from "react-icons/rx";
-import { motion } from "framer-motion";
-import profile from "../../assets/avatar.png";
 import { Link, useNavigate } from "react-router-dom";
+import profile from "../../assets/avatar.png";
 import { useCartContext } from "../../Context/CartContext";
 
 const MobileNavbar = () => {
   const [isMenu, setIsMenu] = useState(false);
-
+  const [user, setUser] = useState(false);
 
   const navigate = useNavigate();
 
   const { cart, toggleCartVisibility } = useCartContext();
 
   const handleCartVisibility = (e) => {
-    toggleCartVisibility()
+    toggleCartVisibility();
     // dispatch(toggleCart(e));
   };
 
@@ -35,7 +41,7 @@ const MobileNavbar = () => {
   };
 
   return (
-    <div className="flex items-center justify-between md:hidden  w-full h-full">
+    <div className=" flex items-center justify-between md:hidden  w-full h-full">
       <div className="relative flex items-center justify-center ">
         <MdShoppingBasket
           onClick={handleCartVisibility}
@@ -71,66 +77,109 @@ const MobileNavbar = () => {
           )}
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.6 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.6 }}
-          className="w-40 bg-gray-50  shadow-xl rounded-lg flex flex-col absolute top-11 right-0"
-        >
-          {isMenu && (
-            <>
-              <Link to={"/profile"}>
-                <p
-                  onClick={() => setIsMenu(false)}
-                  className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
-                >
-                  {" "}
-                  <CgProfile /> Profile
-                </p>
-              </Link>
+        {user ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.6 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.6 }}
+            className="w-40 bg-gray-50  shadow-xl rounded-lg flex flex-col absolute top-11 right-0"
+          >
+            {isMenu && (
+              <>
+                <Link to={"/profile"}>
+                  <p
+                    onClick={() => setIsMenu(false)}
+                    className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
+                  >
+                    {" "}
+                    <CgProfile /> Profile
+                  </p>
+                </Link>
 
-              <ul className=" items-center w-full ">
-                <li
-                  onClick={() => setIsMenu(false)}
-                  className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
-                >
-                  <RiHome3Line /> Home
-                </li>
-                <li
-                  onClick={() => setIsMenu(false)}
-                  className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
-                >
-                  <CgMenuBoxed /> Menu
-                </li>
-                <li
-                  onClick={() => setIsMenu(false)}
-                  className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
-                >
-                  <MdOutlineInfo /> About Us
-                </li>
-              </ul>
+                <ul className=" items-center w-full ">
+                  <li
+                    onClick={() => setIsMenu(false)}
+                    className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
+                  >
+                    <RiHome3Line /> Home
+                  </li>
+                  <li
+                    onClick={() => setIsMenu(false)}
+                    className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
+                  >
+                    <CgMenuBoxed /> Menu
+                  </li>
+                  <li
+                    onClick={() => setIsMenu(false)}
+                    className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
+                  >
+                    <MdOutlineInfo /> About Us
+                  </li>
+                </ul>
 
-              <Link to="dashboard">
-                <p
-                  onClick={() => setIsMenu(false)}
-                  className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
-                >
-                  {" "}
-                  <RxDashboard /> Dashboard
-                </p>
-              </Link>
+                <Link to="dashboard">
+                  <p
+                    onClick={() => setIsMenu(false)}
+                    className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
+                  >
+                    {" "}
+                    <RxDashboard /> Dashboard
+                  </p>
+                </Link>
 
-              <Link to={"/login"}>
-                <p
-                  onClick={handleLogout}
-                  className="m-2 px-2 py-[6px]  flex items-center  bg-gray-200 hover:bg-gray-300 gap-3 cursor-pointer hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base rounded-md shadow-md"
-                >
-                  <MdLogout /> Logout{" "}
-                </p>
-              </Link>
-            </>
-          )}
-        </motion.div>
+                <Link to={"/login"}>
+                  <p
+                    onClick={handleLogout}
+                    className="m-2 px-2 py-[6px]  flex items-center  bg-gray-200 hover:bg-gray-300 gap-3 cursor-pointer hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base rounded-md shadow-md"
+                  >
+                    <MdLogout /> Logout{" "}
+                  </p>
+                </Link>
+              </>
+            )}
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.6 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.6 }}
+            className="w-40 bg-gray-50  shadow-xl rounded-lg flex flex-col absolute top-11 right-0"
+          >
+            {isMenu && (
+              <>
+                <ul className=" items-center w-full ">
+                  <li
+                    onClick={() => setIsMenu(false)}
+                    className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
+                  >
+                    <RiHome3Line /> Home
+                  </li>
+                  <li
+                    onClick={() => setIsMenu(false)}
+                    className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
+                  >
+                    <CgMenuBoxed /> Menu
+                  </li>
+                  <li
+                    onClick={() => setIsMenu(false)}
+                    className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
+                  >
+                    <MdOutlineInfo /> About Us
+                  </li>
+                </ul>
+
+                <Link to={"/login"}>
+                  <p
+                    onClick={handleLogout}
+                    className="m-2 px-2 py-[6px]  flex items-center  bg-gray-200 hover:bg-gray-300 gap-3 cursor-pointer hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base rounded-md shadow-md bg-blue-300"
+                  >
+                    <MdLogin /> Login{" "}
+                  </p>
+                </Link>
+              </>
+            )}
+          </motion.div>
+        )}
       </div>
     </div>
   );
