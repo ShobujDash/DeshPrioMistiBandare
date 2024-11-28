@@ -11,14 +11,12 @@ import { useCartContext } from "../../Context/CartContext";
 
 const DextopNavbar = () => {
   const [isMenu, setIsMenu] = useState(false);
+  const [user, setUser] = useState(false);
   const navigate = useNavigate();
-  // const cart = useSelector((state) => state.carts.cart);
-  // const dispatch = useDispatch();
 
-  const { cart, isCartVisible, toggleCartVisibility } = useCartContext();
+  const { cart, toggleCartVisibility } = useCartContext();
 
   const handleCartVisibility = (e) => {
-    // dispatch(toggleCart(e));
     toggleCartVisibility();
   };
 
@@ -59,55 +57,51 @@ const DextopNavbar = () => {
         </div>
       </div>
 
-      <div className="relative">
-        <motion.img
-          whileTap={{ scale: 0.8 }}
-          onClick={login}
-          src={profile}
-          className="w-10 min-w-[35px] h-10 -mt-1 min-h-[35px] drop-shadow-md cursor-pointer"
-          alt="userProfile"
-        />
+      {user ? (
+        <div className="relative">
+          <motion.img
+            whileTap={{ scale: 0.8 }}
+            onClick={login}
+            src={profile}
+            className="w-10 min-w-[35px] h-10 -mt-1 min-h-[35px] drop-shadow-md cursor-pointer"
+            alt="userProfile"
+          />
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.6 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.6 }}
-          className="w-40 bg-gray-50  shadow-xl rounded-lg flex flex-col absolute top-11 right-0"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.6 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.6 }}
+            className="w-40 bg-gray-50  shadow-xl rounded-lg flex flex-col absolute top-11 right-0"
+          >
+            {isMenu && (
+              <>
+                <Link to={"/profile"} key="profile">
+                  <p onClick={() => setIsMenu(false)} className="...">
+                    <CgProfile /> Profile
+                  </p>
+                </Link>
+                <Link to={"/dashboard"} key="dashboard">
+                  <p onClick={() => setIsMenu(false)} className="...">
+                    <RxDashboard /> Dashboard
+                  </p>
+                </Link>
+                <Link to={"/login"} key="logout">
+                  <p onClick={handleLogout} className="...">
+                    <MdLogout /> Logout
+                  </p>
+                </Link>
+              </>
+            )}
+          </motion.div>
+        </div>
+      ) : (
+        <button
+          onClick={() => navigate("/login")}
+          className="bg-sky-600 hover:bg-sky-300 hover:text-sky-100 transition-all duration-500 px-2 py-1 rounded-md font-medium text-white"
         >
-          {isMenu && (
-            <>
-              <Link to={"/profile"}>
-                <p
-                  onClick={() => setIsMenu(false)}
-                  className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
-                >
-                  {" "}
-                  <CgProfile /> Profile
-                </p>
-              </Link>
-
-              <Link to={"/dashboard"}>
-                <p
-                  onClick={() => setIsMenu(false)}
-                  className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
-                >
-                  {" "}
-                  <RxDashboard /> Dashboard
-                </p>
-              </Link>
-
-              <Link to={"/login"}>
-                <p
-                  onClick={handleLogout}
-                  className="m-2 px-2 py-[6px]  flex items-center  bg-gray-200 hover:bg-gray-300 gap-3 cursor-pointer hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base rounded-md shadow-md"
-                >
-                  <MdLogout /> Logout{" "}
-                </p>
-              </Link>
-            </>
-          )}
-        </motion.div>
-      </div>
+          Login
+        </button>
+      )}
     </div>
   );
 };

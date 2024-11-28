@@ -1,53 +1,104 @@
-import React, { useState } from 'react';
-import ellipse from '../../assets/ellipses.png';
-import logo from '../../assets/logo.png';
-import { NavLink, useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { toast } from 'react-toastify';
-import './login.css'
-
-const defaultEmail = "dukaan@gmail.com";
-const defaultPassword = "password";
+import { useAuthContext } from "../../Context/AuthContex";
+import Loading from "../Loading";
+import "./login.css";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { user } = useAuthContext();
+
   const [formData, setFormData] = useState({
-    email: defaultEmail,
-    password: defaultPassword
+    email: "",
+    password: "",
+    name: "",
   });
 
-   const [addActiveClass, setAddActiveClass] = useState(false);
+  const [btnLoader, setBtnLoader] = useState(false);
+
+  const [addActiveClass, setAddActiveClass] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  // login handeler
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
 
-    // navigate("/");
-  
+    try {
+      setBtnLoader(true);
+      const { data } = await axios.post("/api/user/login", formData);
+
+      if (data?.success) {
+        toast.success("Login Successful.");
+        try {
+          const { data: profileData } = await axios.get("/api/user/getProfile");
+
+          if (profileData?.success) {
+            if (profileData?.data?.isAdmin) {
+              navigate("/admin");
+            } else {
+              navigate("/");
+            }
+          }
+        } catch (error) {
+          console.log("Error fetching profile:", error);
+        }
+        setBtnLoader(false);
+      } else {
+        toast.error(data?.message);
+        setBtnLoader(false);
+      }
+    } catch (error) {
+      toast.error("Something Went Wrong...");
+      setBtnLoader(false);
+    }
+  };
+
+  // register handler
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setBtnLoader(true);
+      const { data } = await axios.post("/api/user/register", formData);
+
+      if (data?.success) {
+        toast.success("Register Successfull.");
+        navigate("/");
+        setBtnLoader(false);
+      } else {
+        toast.error(data?.message);
+        setBtnLoader(false);
+      }
+    } catch (error) {
+      toast.error("Something Went Wrong...");
+      setBtnLoader(false);
+    }
   };
 
   return (
-    
     <div className="body">
       <div className={`container ${addActiveClass ? "active" : ""}`}>
         {/* <!-- sign in  --> */}
         <div className="form-box login">
-          <form onSubmit={handleSubmit} action="">
+          <form onSubmit={handleLoginSubmit} action="">
             <h1>Login</h1>
             <div className="input-box">
               <input
                 value={formData.email}
                 onChange={handleChange}
                 name="email"
-                type="text"
-                placeholder="Username"
+                type="email"
+                placeholder="Email"
                 required
               />
               <i className="bx bxs-user"></i>
@@ -67,8 +118,9 @@ const Login = () => {
               <a href="">Forgot password?</a>
             </div>
             <button type="submit" className="btn">
-              Login
+              {btnLoader ? <Loading /> : "Login"}
             </button>
+
             <p>or login with social platforms</p>
             <div className="social-icons">
               <a href="#">
@@ -102,10 +154,17 @@ const Login = () => {
 
         {/* <!-- sing up --> */}
         <div className="form-box register">
-          <form onSubmit={handleSubmit} action="">
+          <form onSubmit={handleRegisterSubmit} action="">
             <h1>Registration</h1>
             <div className="input-box">
-              <input type="text" placeholder="Username" required />
+              <input
+                value={formData.name}
+                onChange={handleChange}
+                name="name"
+                type="text"
+                placeholder="Username"
+                required
+              />
               <i className="bx bxs-user"></i>
             </div>
             <div className="input-box">
@@ -121,10 +180,10 @@ const Login = () => {
             </div>
             <div className="input-box">
               <input
-                value={formData.email}
+                value={formData.password}
                 onChange={handleChange}
                 name="password"
-                type="text"
+                type="password"
                 placeholder="Password"
                 required
               />
@@ -134,7 +193,7 @@ const Login = () => {
               <a href="">Forgot password?</a>
             </div>
             <button type="submit" className="btn">
-              Ragistraion
+              {btnLoader ? <Loading /> : "Register"}
             </button>
             <p>or register with social platforms</p>
             <div className="social-icons">
@@ -192,6 +251,6 @@ const Login = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Login;

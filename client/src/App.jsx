@@ -3,8 +3,6 @@ import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "./App.css";
 import Login from "./components/user/Login";
-import Profile from "./components/user/Profile";
-import SignUp from "./components/user/SignUp";
 import AdminDashboardPage from "./pages/AdminPages/AdminDashboardPage";
 import Home from "./pages/Home";
 import AdminProtectedRoutes from "./services/AdminProtectedRoute";
@@ -19,12 +17,10 @@ function App() {
 
           <Route element={<AdminProtectedRoutes />}>
             <Route path="/admin" element={<AdminDashboardPage />} />
-            <Route path="/admin/profile" element={<Profile />} />
           </Route>
 
           {/* Public Routes */}
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
         </Routes>
       </div>
       <ToastContainer />
