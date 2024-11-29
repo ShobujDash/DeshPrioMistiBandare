@@ -80,8 +80,7 @@ const UserProfileDetails = async (req,res) => {
   try {
     let user_id = req.headers.id;
 
-    let data = await UserModel.find({ _id: user_id });
-    console.log(data)
+    let data = await UserModel.find({ _id: user_id }).select("-password");
      res.status(200).json({
        success: true,
        data:data[0]

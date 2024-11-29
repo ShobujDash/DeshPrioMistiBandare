@@ -7,6 +7,7 @@ import AdminDashboardPage from "./pages/AdminPages/AdminDashboardPage";
 import Home from "./pages/Home";
 import AdminProtectedRoutes from "./services/AdminProtectedRoute";
 import "./style/adminCss.css";
+import ProductDetails from "./pages/ProductDetails";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <div className="w-screen h-screen flex flex-col bg-primary">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/product/details" element={<ProductDetails />} />
 
           <Route element={<AdminProtectedRoutes />}>
             <Route path="/admin" element={<AdminDashboardPage />} />

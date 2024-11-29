@@ -10,6 +10,7 @@ const Category = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+
   // const {data, isLoading, error} = useGetData();
   const productsPerPage = 8;
 
@@ -57,11 +58,17 @@ const Category = () => {
           </div>
 
           <div className="md:w-4/5 w-full flex flex-col md:items-end md:justify-end  items-center justify-center gap-6">
-            <div className="w-full flex flex-wrap  md:items-start md:justify-start items-center justify-center gap-4">
+        
+
+            <div className="w-full flex flex-wrap md:items-start md:justify-start items-center justify-center gap-4">
               {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard
+                  key={product.id}
+                  product={product}       
+                />
               ))}
             </div>
+
             {/* <Pagination
               totalPages={totalPages}
               currentPage={currentPage}
