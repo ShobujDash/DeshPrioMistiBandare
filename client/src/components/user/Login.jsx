@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAuthContext } from "../../Context/AuthContex";
 import Loading from "../Loading";
 import "./login.css";
+import instance from "../../axios";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,17 +31,54 @@ const Login = () => {
   };
 
   // login handeler
+  // const handleLoginSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     setBtnLoader(true);
+  //     const { data } = await axios.post("/api/user/login", formData);
+
+  //     if (data?.success) {
+  //       toast.success("Login Successful.");
+  //       try {
+  //         const { data: profileData } = await axios.get("/api/user/getProfile");
+
+  //         if (profileData?.success) {
+  //           if (profileData?.data?.isAdmin) {
+  //             navigate("/admin");
+  //           } else {
+  //             navigate("/");
+  //           }
+  //         }
+  //       } catch (error) {
+  //         console.log("Error fetching profile:", error);
+  //       }
+  //       setBtnLoader(false);
+  //     } else {
+  //       toast.error(data?.message);
+  //       setBtnLoader(false);
+  //     }
+  //   } catch (error) {
+  //     toast.error("Something Went Wrong...");
+  //     setBtnLoader(false);
+  //   }
+  // };
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
 
     try {
       setBtnLoader(true);
-      const { data } = await axios.post("/api/user/login", formData);
+
+      // instance ব্যবহার করে POST রিকোয়েস্ট
+      const { data } = await instance.post("/api/user/login", formData);
 
       if (data?.success) {
         toast.success("Login Successful.");
         try {
-          const { data: profileData } = await axios.get("/api/user/getProfile");
+          // instance ব্যবহার করে GET রিকোয়েস্ট
+          const { data: profileData } = await instance.get(
+            "/api/user/getProfile"
+          );
 
           if (profileData?.success) {
             if (profileData?.data?.isAdmin) {
@@ -69,7 +107,7 @@ const Login = () => {
 
     try {
       setBtnLoader(true);
-      const { data } = await axios.post("/api/user/register", formData);
+      const { data } = await instance.post("/api/user/register", formData);
 
       if (data?.success) {
         toast.success("Register Successfull.");
