@@ -24,11 +24,12 @@ connectDB();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://desh-prio-misti-bandare.vercel.app", // Allow only your frontend
-    credentials: true, // Allow cookies to be sent with requests if needed
+    origin: "https://desh-prio-misti-bandare.vercel.app", // Replace with your frontend URL
+    credentials: true, // Allow cookies and credentials
     methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods
   })
 );
+
 
 app.use(helmet());
 app.use(mongoSanitize());
