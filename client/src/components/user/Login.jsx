@@ -31,6 +31,7 @@ const Login = () => {
   };
 
   // login handeler
+
   // const handleLoginSubmit = async (e) => {
   //   e.preventDefault();
 
@@ -63,43 +64,85 @@ const Login = () => {
   //     setBtnLoader(false);
   //   }
   // };
+  // const handleLoginSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     setBtnLoader(true);
+
+  //     // instance ব্যবহার করে POST রিকোয়েস্ট
+  //     const { data } = await instance.post("/api/user/login", formData);
+
+  //     if (data?.success) {
+  //       toast.success("Login Successful.");
+  //       try {
+  //         // instance ব্যবহার করে GET রিকোয়েস্ট
+  //         const { data: profileData } = await instance.get(
+  //           "/api/user/getProfile"
+  //         );
+
+  //         if (profileData?.success) {
+  //           if (profileData?.data?.isAdmin) {
+  //             navigate("/admin");
+  //           } else {
+  //             navigate("/");
+  //           }
+  //         }
+  //       } catch (error) {
+  //         console.log("Error fetching profile:", error);
+  //       }
+  //       setBtnLoader(false);
+  //     } else {
+  //       toast.error(data?.message);
+  //       setBtnLoader(false);
+  //     }
+  //   } catch (error) {
+  //     toast.error("Something Went Wrong...");
+  //     setBtnLoader(false);
+  //   }
+  // };
+
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
 
     try {
       setBtnLoader(true);
-
-      // instance ব্যবহার করে POST রিকোয়েস্ট
       const { data } = await instance.post("/api/user/login", formData);
 
       if (data?.success) {
-        toast.success("Login Successful.");
+        toast.success("লগইন সফল।");
+
         try {
-          // instance ব্যবহার করে GET রিকোয়েস্ট
+          // প্রোফাইল ডেটা নিয়ে নেভিগেশনের জন্য চেক করুন
           const { data: profileData } = await instance.get(
             "/api/user/getProfile"
           );
 
           if (profileData?.success) {
             if (profileData?.data?.isAdmin) {
-              navigate("/admin");
+              navigate("/admin"); // অ্যাডমিন পৃষ্ঠায় নেভিগেট করুন
             } else {
-              navigate("/");
+              navigate("/"); // হোম পৃষ্ঠায় নেভিগেট করুন
             }
+          } else {
+            toast.error("প্রোফাইল ডেটা আনতে ব্যর্থ।");
           }
-        } catch (error) {
-          console.log("Error fetching profile:", error);
+        } catch (profileError) {
+          console.error("প্রোফাইল ফেচিং ত্রুটি:", profileError);
+          toast.error("প্রোফাইল ফেচিং ত্রুটি। আবার চেষ্টা করুন।");
         }
-        setBtnLoader(false);
       } else {
-        toast.error(data?.message);
-        setBtnLoader(false);
+        toast.error(data?.message || "লগইন ব্যর্থ। আবার চেষ্টা করুন।");
       }
-    } catch (error) {
-      toast.error("Something Went Wrong...");
+    } catch (loginError) {
+      console.error("লগইন ত্রুটি:", loginError);
+      toast.error("কিছু ভুল হয়েছে। আবার চেষ্টা করুন।");
+    } finally {
       setBtnLoader(false);
     }
   };
+
+
 
   // register handler
   const handleRegisterSubmit = async (e) => {
