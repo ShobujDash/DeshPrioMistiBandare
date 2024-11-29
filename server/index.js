@@ -24,11 +24,14 @@ connectDB();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173", // Allow only your frontend
-    credentials: true, // Allow cookies to be sent with requests if needed
-    methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods
+    origin: [
+      "https://desh-prio-misti-bandare-d7j7uinhr-shobujd6gmailcoms-projects.vercel.app",
+    ], // আপনার ফ্রন্টএন্ড URL
+    credentials: true, // Cookie Enable করার জন্য
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
+
 
 app.use(helmet());
 app.use(mongoSanitize());
@@ -62,5 +65,5 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log("App Run @5010");
+  console.log("App Run @3000");
 });
