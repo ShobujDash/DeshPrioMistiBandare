@@ -24,9 +24,7 @@ connectDB();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: [
-      "https://desh-prio-misti-bandare-d7j7uinhr-shobujd6gmailcoms-projects.vercel.app",
-    ], // আপনার ফ্রন্টএন্ড URL
+    origin: "https://desh-prio-misti-bandare.vercel.app", // আপনার ফ্রন্টএন্ড URL
     credentials: true, // Cookie Enable করার জন্য
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
