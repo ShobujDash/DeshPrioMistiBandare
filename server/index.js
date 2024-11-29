@@ -1,5 +1,5 @@
 const express = require("express");
-const userRouter = require("./routes/userRoute")
+const userRouter = require("./routes/userRoute");
 const app = new express();
 const dotenv = require("dotenv").config();
 
@@ -13,8 +13,8 @@ const cookieParser = require("cookie-parser");
 
 // Database Lib Import
 const mongoose = require("mongoose");
-const connectDB  = require("./config/db");
-const  connectCloudinary  = require("./config/cloudinary");
+const connectDB = require("./config/db");
+const connectCloudinary = require("./config/cloudinary");
 
 // let URL = process.env.MONGO_URL;
 connectDB();
@@ -22,7 +22,14 @@ connectDB();
 
 // Security Middleware Implement
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Allow only your frontend
+    credentials: true, // Allow cookies to be sent with requests if needed
+    methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods
+  })
+);
+
 app.use(helmet());
 app.use(mongoSanitize());
 app.use(hpp());
@@ -52,7 +59,6 @@ app.use((err, req, res, next) => {
     message,
   });
 });
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

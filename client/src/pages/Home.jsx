@@ -2,17 +2,19 @@ import axios from "axios";
 import { useState } from "react";
 import Layout from "../components/Layout/Layout";
 import { useAuthContext } from "../Context/AuthContex";
+import MainContainer from "../components/home/MainContainer";
 
 const Home = () => {
 
-  const {user} = useAuthContext()
+  const { user } = useAuthContext()
+  console.log(user)
 
 
   return (
     <Layout>
-      {/* <button className=" p-2 bg-red-300" onClick={getprofiledata}>
-        profile data
-      </button> */}
+      <main className="mt-14 md:mt-20 md:px-16 bg-primary px-8 py-4 w-full">
+        <MainContainer />
+      </main>
     </Layout>
   );
 };
