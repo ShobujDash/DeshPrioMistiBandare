@@ -24,7 +24,7 @@ connectDB();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173", // Allow only your frontend
+    origin: "https://desh-prio-misti-bandare.vercel.app", // Allow only your frontend
     credentials: true, // Allow cookies to be sent with requests if needed
     methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods
   })
