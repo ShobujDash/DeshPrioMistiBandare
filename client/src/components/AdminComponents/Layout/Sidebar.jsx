@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ toggle }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const navigate = useNavigate()
 
   // Handler to set active index
   const handleActive = (index) => {
     setActiveIndex(index);
+    navigate('/')
   };
 
   const sidebarmenu = [

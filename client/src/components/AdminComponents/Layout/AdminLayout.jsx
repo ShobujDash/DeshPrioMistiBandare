@@ -3,7 +3,7 @@ import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 
 
-const Layout = ({ children }) => {
+const AdminLayout = ({ children }) => {
   const [toggle, setToggle] = useState(true);
 
   const handleToggle = () => {
@@ -23,4 +23,4 @@ const Layout = ({ children }) => {
   );
 };
 
-export default Layout;
+export default AdminLayout;

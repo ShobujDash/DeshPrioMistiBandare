@@ -1,5 +1,8 @@
 const express = require("express");
 const userRouter = require("./routes/userRoute");
+const adminRoute = require("./routes/adminRoute");
+const commonRoute = require("./routes/commonRoute");
+const mediaRoute = require("./routes/mediaRoute");
 const app = new express();
 const dotenv = require("dotenv").config();
 
@@ -16,15 +19,21 @@ const mongoose = require("mongoose");
 const connectDB = require("./config/db");
 const connectCloudinary = require("./config/cloudinary");
 
-// let URL = process.env.MONGO_URL;
 connectDB();
 // connectCloudinary();
 
 // Security Middleware Implement
 app.use(cookieParser());
+// app.use(
+//   cors({
+//     origin: "https://desh-prio-misti-bandare.vercel.app", // আপনার ফ্রন্টএন্ড URL
+//     credentials: true, // Cookie Enable করার জন্য
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//   })
+// );
 app.use(
   cors({
-    origin: "https://desh-prio-misti-bandare.vercel.app", // আপনার ফ্রন্টএন্ড URL
+    origin: "http://localhost:5173", // আপনার ফ্রন্টএন্ড URL
     credentials: true, // Cookie Enable করার জন্য
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
@@ -44,6 +53,9 @@ app.use(limiter);
 
 // Routing Implement
 app.use("/api/user", userRouter);
+app.use("/api/admin", adminRoute);
+app.use("/api/common", commonRoute);
+app.use("/api/media", mediaRoute);
 
 // Undefined Route Implement
 app.use("*", (req, res) => {
