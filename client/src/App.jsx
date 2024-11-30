@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import AdminProtectedRoutes from "./services/AdminProtectedRoute";
 import "./style/adminCss.css";
 import ProductDetails from "./pages/ProductDetails";
+import CategoryPage from "./pages/AdminPages/CetegoryPage";
 
 function App() {
   return (
@@ -16,9 +17,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/details" element={<ProductDetails />} />
+          
 
           <Route element={<AdminProtectedRoutes />}>
             <Route path="/admin" element={<AdminDashboardPage />} />
+            <Route path="/admin/add-categroy" element={<CategoryPage />} />
+            <Route path="/admin/add-product" element={<AdminDashboardPage />} />
           </Route>
 
           {/* Public Routes */}

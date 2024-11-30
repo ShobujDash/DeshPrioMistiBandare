@@ -1,14 +1,13 @@
 import CardList from "../../components/AdminComponents/CardList";
 import HeadData from "../../components/AdminComponents/HeadData";
-import Layout from "../../components/AdminComponents/Layout/AdminLayout";
+import AdminLayout from "../../components/AdminComponents/Layout/AdminLayout";
 import TableData from "../../components/AdminComponents/TableData";
 
 
 const AdminDashboardPage = () => {
   return (
     <>
-   
-      <Layout>
+      <AdminLayout>
         <>
           <HeadData />
 
@@ -16,7 +15,7 @@ const AdminDashboardPage = () => {
 
           <TableData />
         </>
-      </Layout>
+      </AdminLayout>
     </>
   );
 };

@@ -3,7 +3,7 @@ const { v2 } = require("cloudinary");
 const jwt = require("jsonwebtoken");
 const validator = require("validator");
 const cookieToken = require("../utils/cookieToken");
-const UserModel = require("../models/userModel");
+const UserModel = require("../models/UserModel");
 
 // API to register user
 const registerUser = async (req, res, next) => {
@@ -89,6 +89,8 @@ const UserProfileDetails = async (req,res) => {
     return { status: "fail", message: "Something went wrong" };
   }
 };
+
+
 
 // // API to get user profile data
 // const getProfile = async (req, res, next) => {
