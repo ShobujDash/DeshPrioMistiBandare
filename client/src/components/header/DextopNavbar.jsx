@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { CgProfile } from "react-icons/cg";
 import { MdLogout, MdShoppingBasket } from "react-icons/md";
@@ -8,10 +8,13 @@ import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import profile from "../../assets/avatar.png";
 import { useCartContext } from "../../Context/CartContext";
+import { useAuthContext } from "../../Context/AuthContex";
 
 const DextopNavbar = () => {
+
+   const { user } = useAuthContext();
+
   const [isMenu, setIsMenu] = useState(false);
-  const [user, setUser] = useState(false);
   const navigate = useNavigate();
 
   const { cart, toggleCartVisibility } = useCartContext();
@@ -29,6 +32,7 @@ const DextopNavbar = () => {
   const login = () => {
     setIsMenu(!isMenu);
   };
+
 
   return (
     <div className="flex items-center gap-8">
@@ -76,17 +80,26 @@ const DextopNavbar = () => {
             {isMenu && (
               <>
                 <Link to={"/profile"} key="profile">
-                  <p onClick={() => setIsMenu(false)} className="...">
+                  <p
+                    onClick={() => setIsMenu(false)}
+                    className="flex gap-2 px-2 py-3"
+                  >
                     <CgProfile /> Profile
                   </p>
                 </Link>
-                <Link to={"/dashboard"} key="dashboard">
-                  <p onClick={() => setIsMenu(false)} className="...">
+                {
+                  user && user.isAdmin ? <Link to={"/admin"} key="dashboard">
+                  <p
+                    onClick={() => setIsMenu(false)}
+                    className="flex gap-2 px-2 py-3"
+                  >
                     <RxDashboard /> Dashboard
                   </p>
-                </Link>
+                </Link> : null
+                }
+                
                 <Link to={"/login"} key="logout">
-                  <p onClick={handleLogout} className="...">
+                  <p onClick={handleLogout} className="flex gap-2 px-2 py-3">
                     <MdLogout /> Logout
                   </p>
                 </Link>

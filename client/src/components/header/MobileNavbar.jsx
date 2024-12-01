@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../../assets/rasgulla.png";
 
 import { CgMenuBoxed, CgProfile } from "react-icons/cg";
@@ -16,10 +16,11 @@ import { RxDashboard } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import profile from "../../assets/avatar.png";
 import { useCartContext } from "../../Context/CartContext";
+import { useAuthContext } from "../../Context/AuthContex";
 
 const MobileNavbar = () => {
   const [isMenu, setIsMenu] = useState(false);
-  const [user, setUser] = useState(false);
+  const {user} = useAuthContext()
 
   const navigate = useNavigate();
 
@@ -39,6 +40,8 @@ const MobileNavbar = () => {
     localStorage.removeItem("loggedin");
     navigate("/login");
   };
+
+  
 
   return (
     <div className=" flex items-center justify-between md:hidden  w-full h-full">
@@ -117,15 +120,16 @@ const MobileNavbar = () => {
                   </li>
                 </ul>
 
-                <Link to="dashboard">
-                  <p
-                    onClick={() => setIsMenu(false)}
-                    className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
-                  >
-                    {" "}
-                    <RxDashboard /> Dashboard
-                  </p>
-                </Link>
+                {/* {user && user.isAdmin ? (
+                  <Link to={"/admin"} key="dashboard">
+                    <p
+                      onClick={() => setIsMenu(false)}
+                      className="flex gap-2 px-2 py-3"
+                    >
+                      <RxDashboard /> Dashboard
+                    </p>
+                  </Link>
+                ) : null} */}
 
                 <Link to={"/login"}>
                   <p

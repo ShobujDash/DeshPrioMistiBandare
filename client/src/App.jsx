@@ -9,6 +9,9 @@ import AdminProtectedRoutes from "./services/AdminProtectedRoute";
 import "./style/adminCss.css";
 import ProductDetails from "./pages/ProductDetails";
 import CategoryPage from "./pages/AdminPages/CetegoryPage";
+import ProductPage from "./pages/AdminPages/ProductPage";
+import DiscountSprtUserPage from "./pages/AdminPages/DiscountSprtUserPage";
+import TodaysCalculationPage from "./pages/AdminPages/TodaysCalculation";
 
 function App() {
   return (
@@ -17,12 +20,16 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/details" element={<ProductDetails />} />
-          
 
           <Route element={<AdminProtectedRoutes />}>
             <Route path="/admin" element={<AdminDashboardPage />} />
-            <Route path="/admin/add-categroy" element={<CategoryPage />} />
-            <Route path="/admin/add-product" element={<AdminDashboardPage />} />
+            <Route path="/admin/categroy" element={<CategoryPage />} />
+            <Route path="/admin/product" element={<ProductPage />} />
+            <Route
+              path="/admin/product-discount-for-saparate-user"
+              element={<DiscountSprtUserPage />}
+            />
+            <Route path="/admin/todays-calculation" element={<TodaysCalculationPage />} />
           </Route>
 
           {/* Public Routes */}
