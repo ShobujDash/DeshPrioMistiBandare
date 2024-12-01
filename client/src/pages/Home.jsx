@@ -7,7 +7,7 @@ import MainContainer from "../components/home/MainContainer";
 const Home = () => {
 
   const { user } = useAuthContext()
-  console.log(user)
+
 
 
   return (

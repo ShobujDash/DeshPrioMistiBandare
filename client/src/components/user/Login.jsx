@@ -118,7 +118,7 @@ const Login = () => {
                 value={formData.password}
                 onChange={handleChange}
                 name="password"
-                type="text"
+                type="password"
                 placeholder="Password"
                 required
               />

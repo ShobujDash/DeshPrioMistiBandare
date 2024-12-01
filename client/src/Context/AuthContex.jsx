@@ -23,7 +23,9 @@ const AuthContextProvider = ({ children }) => {
     
     }
     fetchUserData();
-  },[])
+  }, [])
+  
+ 
 
 
 

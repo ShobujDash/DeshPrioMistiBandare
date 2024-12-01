@@ -2,6 +2,7 @@ import CardList from "../../components/AdminComponents/CardList";
 import HeadData from "../../components/AdminComponents/HeadData";
 import AdminLayout from "../../components/AdminComponents/Layout/AdminLayout";
 import TableData from "../../components/AdminComponents/TableData";
+import Transactions from "../../components/AdminComponents/Transactions";
 
 
 const AdminDashboardPage = () => {
@@ -14,6 +15,7 @@ const AdminDashboardPage = () => {
           <CardList />
 
           <TableData />
+          <Transactions/>
         </>
       </AdminLayout>
     </>
