@@ -3,7 +3,7 @@ const { v2 } = require("cloudinary");
 const jwt = require("jsonwebtoken");
 const validator = require("validator");
 const cookieToken = require("../utils/cookieToken");
-const UserModel = require("../models/UserModel");
+const UserModel = require("../models/userModel");
 
 // API to register user
 const registerUser = async (req, res, next) => {
