@@ -1,6 +1,4 @@
-import React from "react";
 import ProductRow from "./ProductRow";
-
 
 const ProductTable = ({ products }) => {
   return (
@@ -69,9 +67,16 @@ const ProductTable = ({ products }) => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                {products.map((product) => (
-                  <ProductRow key={product.id} product={product} />
-                ))}
+                {products.length === 0 ? (
+                  <div className="flex justify-center items-center w-full h-full">
+
+                    <h1 >Not Found Any Data</h1>
+                  </div>
+                ) : (
+                  products.map((product) => (
+                    <ProductRow key={product.id} product={product} />
+                  ))
+                )}
               </tbody>
             </table>
           </div>

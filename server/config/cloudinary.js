@@ -9,17 +9,30 @@ cloudinary.config({
 
 
 
-const uploadMediaToCloudinary = async (filepath) => {
+// const uploadMediaToCloudinary = async (filepath) => {
+//   try {
+//     const result = await cloudinary.uploader.upload(filepath, {
+//       resource_type: "image",
+//     });
+//     return result;
+//   } catch (error) {
+//     console.error(error);
+//     throw new Error("Error uploading to Cloudinary");
+//   }
+// };
+const uploadMediaToCloudinary = async (filePath) => {
   try {
-    const result = await cloudinary.uploader.upload(filepath, {
-      resource_type: "image",
+    const result = await cloudinary.uploader.upload(filePath, {
+      folder: "deshprio", // Optional: specify a folder in Cloudinary
+      resource_type: "image", // Ensure the resource is treated as an image
     });
-    return result;
+    return result; // Returns the Cloudinary result object
   } catch (error) {
-    console.error(error);
+    console.error("Error uploading to Cloudinary:", error);
     throw new Error("Error uploading to Cloudinary");
   }
 };
+
 
 const deleteMediaFromCloudinary = async (publicID) => {
   try {

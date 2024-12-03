@@ -3,20 +3,15 @@ import Breadcrumb from "../../components/AdminComponents/Breadcrumb";
 import AdminLayout from "../../components/AdminComponents/Layout/AdminLayout";
 import Toolbar from "../../components/AdminComponents/NewBreadcumb/ProductToolBar";
 import Product from "../../components/AdminComponents/Product/Products";
-import AddModal from "../../components/AdminComponents/Modal/AddModal";
 
-const ProductPage = () => {
+const AdminProfilePage = () => {
   return (
     <>
       <AdminLayout>
-        <Breadcrumb pageName="Product" />
-        <div className="container mx-auto">
-          <Toolbar pageName={"Product"} />
-          <Product />
-        </div>
+        <h1>Admin Profile Page</h1>
       </AdminLayout>
     </>
   );
 };
 
-export default ProductPage;
+export default AdminProfilePage;

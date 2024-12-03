@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import AddModal from "../Add/AddModal";
+import { useState } from "react";
+import AddModal from "../Modal/AddModal";
 
-
-const Toolbar = ({pageName}) => {
- const [isModalOpen, setModalOpen] = useState(false);
+const Toolbar = ({ pageName }) => {
+  const [isModalOpen, setModalOpen] = useState(false);
 
   return (
     <>
@@ -92,7 +91,11 @@ const Toolbar = ({pageName}) => {
         </div>
       </div>
 
-      <AddModal pageName={pageName} isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
+      <AddModal
+        pageName={pageName}
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </>
   );
 };

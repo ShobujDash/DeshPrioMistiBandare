@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProductTable from "./ProductTable";
+import instance from "../../../axios";
 
 
 const products = [
@@ -115,6 +116,10 @@ const products = [
 ];
 
 const Product = () => {
+
+  
+
+
   return (
     <div className="container rounded-sm mx-auto overflow-y-scroll">
       <ProductTable products={products} />
