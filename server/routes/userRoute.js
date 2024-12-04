@@ -1,7 +1,9 @@
 const express = require("express");
 
 const AuthVerification = require("../middlewares/AuthVerification");
+
 const { registerUser, loginUser, UserProfileDetails, logoutUser } = require("../controllers/UserController");
+
 
 const userRouter = express.Router();
 
