@@ -18,6 +18,7 @@ const AdminLayout = ({ children }) => {
       <section id="content">
         <Navbar onHanldeToggle={handleToggle} />
         <main>{children}</main>
+        {/* {children} */}
       </section>
     </>
   );

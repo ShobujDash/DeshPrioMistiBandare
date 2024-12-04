@@ -7,7 +7,12 @@ const Breadcrumb = ({ pageName }) => {
         {pageName}
       </h2>
 
-      <nav className="w-full sm:w-52">
+      <nav
+        style={{
+          zIndex: -100,
+        }}
+        className="w-full sm:w-52 "
+      >
         <ol className="flex items-center gap-2">
           <li>
             <Link to="/admin">Dashboard /</Link>

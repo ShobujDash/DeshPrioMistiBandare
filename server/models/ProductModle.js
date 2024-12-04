@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const DataSchema = mongoose.Schema(
   {
     categoryID: { type: mongoose.Schema.Types.ObjectId, required: true },
+    productName: { type: String, required: true },
     title: { type: String, trim: true, required: true },
     shortDes: { type: String, trim: true, required: true },
     image: { type: String, trim: true, required: true },
@@ -10,7 +11,7 @@ const DataSchema = mongoose.Schema(
     descountPrice: { type: String, trim: true },
     descount: { type: Boolean, trim: true, default: false },
     stock: { type: Boolean, default: true },
-    imageId:{type:String,trim:true}
+    imageId:{type:String,trim:true,require:true}
   },
   { timestamps: true, versionKey: false }
 );

@@ -10,7 +10,7 @@ import instance from "../../axios";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { user } = useAuthContext();
+  const { user, setUser } = useAuthContext();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -48,6 +48,7 @@ const Login = () => {
           );
 
           if (profileData?.success) {
+              setUser(profileData.data);
             if (profileData?.data?.isAdmin) {
               navigate("/admin"); // অ্যাডমিন পৃষ্ঠায় নেভিগেট করুন
             } else {

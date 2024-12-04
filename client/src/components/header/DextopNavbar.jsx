@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { CgProfile } from "react-icons/cg";
 import { MdLogout, MdShoppingBasket } from "react-icons/md";
@@ -6,13 +6,14 @@ import { RxDashboard } from "react-icons/rx";
 
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import profile from "../../assets/avatar.png";
-import { useCartContext } from "../../Context/CartContext";
+import instance from "../../axios";
 import { useAuthContext } from "../../Context/AuthContex";
+import { useCartContext } from "../../Context/CartContext";
 
 const DextopNavbar = () => {
-
-   const { user } = useAuthContext();
+  const { user } = useAuthContext();
 
   const [isMenu, setIsMenu] = useState(false);
   const navigate = useNavigate();
@@ -23,16 +24,25 @@ const DextopNavbar = () => {
     toggleCartVisibility();
   };
 
-  const handleLogout = (e) => {
+  const handleLogout = async (e) => {
     e.preventDefault();
-    localStorage.removeItem("loggedin");
-    navigate("/login");
+    try {
+      // Call the logout endpoint
+      const { data } = await instance.post("/api/user/logout");
+      if (data?.success) {
+        toast.success("Logout Successfully");
+        navigate("/login");
+      } else {
+        toast.error("Something went wrong.");
+      }
+    } catch (error) {
+      toast.error("Logout failed. Please try again.");
+    }
   };
 
   const login = () => {
     setIsMenu(!isMenu);
   };
-
 
   return (
     <div className="flex items-center gap-8">
@@ -87,17 +97,17 @@ const DextopNavbar = () => {
                     <CgProfile /> Profile
                   </p>
                 </Link>
-                {
-                  user && user.isAdmin ? <Link to={"/admin"} key="dashboard">
-                  <p
-                    onClick={() => setIsMenu(false)}
-                    className="flex gap-2 px-2 py-3"
-                  >
-                    <RxDashboard /> Dashboard
-                  </p>
-                </Link> : null
-                }
-                
+                {user && user.isAdmin ? (
+                  <Link to={"/admin"} key="dashboard">
+                    <p
+                      onClick={() => setIsMenu(false)}
+                      className="flex gap-2 px-2 py-3"
+                    >
+                      <RxDashboard /> Dashboard
+                    </p>
+                  </Link>
+                ) : null}
+
                 <Link to={"/login"} key="logout">
                   <p onClick={handleLogout} className="flex gap-2 px-2 py-3">
                     <MdLogout /> Logout

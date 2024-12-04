@@ -1,7 +1,51 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
-const AddModal = ({ isOpen, onClose ,pageName}) => {
+const ProductModal = ({ isOpen, onClose, pageName }) => {
   if (!isOpen) return null;
+  const [categoryName, setCategoryName] = useState("");
+  const [uploadedImageData, setUploadedImageData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false); // Track file upload status
+
+  const buttonClasses = isLoading
+    ? "text-gray-400 bg-gray-200 cursor-not-allowed"
+    : "text-white bg-blue-900 hover:bg-blue-800 cursor-pointer";
+
+  const handleUploadComplete = (data) => {
+    console.log("Upload Complete:", data);
+    setUploadedImageData(data);
+  };
+
+  const handleCategorySubmit = async (e) => {
+    e.preventDefault();
+
+    const { url, publicId } = uploadedImageData;
+    const categoryData = {
+      categoryImg: url,
+      imageId: publicId,
+      categoryName,
+    };
+    try {
+      const { data } = await instance.post(
+        "/api/admin/addCategory",
+        categoryData
+      );
+      if (data?.success) {
+        toast.success(data?.message);
+
+        // Reset form fields
+        setCategoryName("");
+        setUploadedImageData(null);
+
+        // Close the modal
+        onClose();
+      }
+    } catch (error) {
+      toast.error("Something went wrong!");
+      // Close the modal
+      onClose();
+    }
+  };
 
   return (
     <div className="fixed ml-20 sm:ml-0 inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -117,7 +161,9 @@ const AddModal = ({ isOpen, onClose ,pageName}) => {
         <div className="flex justify-end p-6 border-t dark:border-gray-700">
           <button
             type="button"
-            className="text-white bg-blue-900 hover:bg-primary-800 px-5 py-2.5 rounded-lg font-medium dark:bg-primary-600 dark:hover:bg-primary-700"
+            className={`px-5 py-2.5 rounded-lg font-medium ${buttonClasses}`}
+            onClick={handleCategorySubmit}
+            disabled={isLoading}
           >
             Add {pageName}
           </button>
@@ -127,4 +173,4 @@ const AddModal = ({ isOpen, onClose ,pageName}) => {
   );
 };
 
-export default AddModal;
+export default ProductModal;

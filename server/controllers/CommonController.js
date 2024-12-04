@@ -1,10 +1,12 @@
 const CategoryModel = require("../models/CategoryModel");
 const ProductModel = require("../models/ProductModle");
 
+
+
 const getAllCategories = async (req, res, next) => {
   try {
-    // Fetch all categories from the database
-    const categories = await CategoryModel.find();
+    // Fetch all categories sorted by creation time (newest first)
+    const categories = await CategoryModel.find().sort({ createdAt: -1 });
 
     // If no categories are found
     if (!categories || categories.length === 0) {
@@ -19,6 +21,8 @@ const getAllCategories = async (req, res, next) => {
     next(error); // Pass the error to the error-handling middleware
   }
 };
+
+
 const getAllProducts = async (req, res, next) => {
   try {
     // Fetch all categories from the database

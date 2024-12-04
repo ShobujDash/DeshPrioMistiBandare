@@ -120,7 +120,7 @@ const MobileNavbar = () => {
                   </li>
                 </ul>
 
-                {/* {user && user.isAdmin ? (
+                {user && user.isAdmin ? (
                   <Link to={"/admin"} key="dashboard">
                     <p
                       onClick={() => setIsMenu(false)}
@@ -129,7 +129,7 @@ const MobileNavbar = () => {
                       <RxDashboard /> Dashboard
                     </p>
                   </Link>
-                ) : null} */}
+                ) : null}
 
                 <Link to={"/login"}>
                   <p

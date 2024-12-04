@@ -12,6 +12,7 @@ import CategoryPage from "./pages/AdminPages/CetegoryPage";
 import ProductPage from "./pages/AdminPages/ProductPage";
 import DiscountSprtUserPage from "./pages/AdminPages/DiscountSprtUserPage";
 import TodaysCalculationPage from "./pages/AdminPages/TodaysCalculation";
+import AdminProfilePage from "./pages/AdminPages/AdminProfilePage";
 
 function App() {
   return (
@@ -29,7 +30,12 @@ function App() {
               path="/admin/product-discount-for-saparate-user"
               element={<DiscountSprtUserPage />}
             />
-            <Route path="/admin/todays-calculation" element={<TodaysCalculationPage />} />
+            <Route
+              path="/admin/todays-calculation"
+              element={<TodaysCalculationPage />}
+            />
+
+            <Route path="/admin/profile" element={<AdminProfilePage />} />
           </Route>
 
           {/* Public Routes */}

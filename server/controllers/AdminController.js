@@ -1,6 +1,7 @@
 const CategoryModel = require("../models/CategoryModel");
 const ProductModel = require("../models/ProductModle");
 
+
 // API to register user
 const addCategory = async (req, res, next) => {
   try {
@@ -11,7 +12,7 @@ const addCategory = async (req, res, next) => {
       return res.status(403).json({ success: false, message: "Unauthorized" });
     }
 
-    const { categoryId, categoryName, categoryImg } = req.body;
+    const { categoryId, categoryName, categoryImg, imageId } = req.body;
 
     // Validate required fields
     if (!categoryName) {
@@ -20,7 +21,7 @@ const addCategory = async (req, res, next) => {
         .json({ success: false, message: "Missing required fields" });
     }
 
-    const categoryData = { categoryName, categoryImg };
+    const categoryData = { categoryName, categoryImg, imageId };
 
     let result;
 

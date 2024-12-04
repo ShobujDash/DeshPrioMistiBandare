@@ -549,6 +549,11 @@ body {
 	#content nav form .form-input input {
 		display: none;
 	}
+	#content main {
+
+	padding: 10px 5px;
+
+}
 
 	#content nav form .form-input button {
 		width: auto;
