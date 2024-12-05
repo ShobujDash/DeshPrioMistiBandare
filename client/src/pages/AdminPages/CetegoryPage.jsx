@@ -1,17 +1,41 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import instance from "../../axios";
 import Breadcrumb from "../../components/AdminComponents/Breadcrumb";
 import AdminLayout from "../../components/AdminComponents/Layout/AdminLayout";
+import DeleteModal from "../../components/AdminComponents/Modal/DeleteModal";
 import Toolbar from "../../components/AdminComponents/NewBreadcumb/ProductToolBar";
 import Checkbox from "../../components/AdminComponents/Product/Checkbox";
 import { useAdminContext } from "../../Context/AdminContext";
-import DeleteModal from "../../components/AdminComponents/Modal/DeleteModal";
 
 const CategoryPage = () => {
- const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const { categories, getAllCategoirsData } = useAdminContext();
 
- 
+  let publicId = selectedCategory?.imageId.split("/")[1];
+
+  const delteImageFormcludinary = async () => {
+    await instance.delete(`/api/media/delete/${publicId}`);
+    console.log("image is delete");
+  };
+
+  const deteleCategory = async () => {
+    try {
+      await delteImageFormcludinary();
+      const { data } = await instance.delete(
+        `/api/admin/delete-category/${selectedCategory?._id}`
+      );
+      if (data?.success) {
+        toast.success(data?.message);
+        await getAllCategoirsData();
+        return true;
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(data?.message);
+    }
+  };
 
   useEffect(() => {
     getAllCategoirsData();
@@ -61,12 +85,6 @@ const CategoryPage = () => {
                             scope="col"
                             className="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
                           >
-                            Description
-                          </th>
-                          <th
-                            scope="col"
-                            className="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
-                          >
                             Actions
                           </th>
                         </tr>
@@ -97,13 +115,11 @@ const CategoryPage = () => {
                                   alt=""
                                 />
                               </td>
-                              <td className="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {category.discount}
-                              </td>
                               <td className="p-4 space-x-2 whitespace-nowrap">
                                 <button
                                   type="button"
                                   className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-blue-700 rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                  onClick={() => setSelectedCategory(category)}
                                 >
                                   <svg
                                     className="w-4 h-4 mr-2"
@@ -123,7 +139,10 @@ const CategoryPage = () => {
                                 <button
                                   type="button"
                                   className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
-                                  onClick={() => setModalOpen(true)}
+                                  onClick={() => {
+                                    setModalOpen(true);
+                                    setSelectedCategory(category);
+                                  }}
                                 >
                                   <svg
                                     className="w-4 h-4 mr-2"
@@ -154,6 +173,7 @@ const CategoryPage = () => {
           <DeleteModal
             isOpen={isModalOpen}
             onClose={() => setModalOpen(false)}
+            onDelete={deteleCategory} // Renamed prop for clarity
           />
         </div>
       </AdminLayout>

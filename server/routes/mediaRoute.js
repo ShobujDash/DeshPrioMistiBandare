@@ -25,18 +25,18 @@ mediaRouter.post("/upload",AuthVerification, upload.single("image"), async (req,
   }
 });
 
-mediaRouter.delete("/delete/:id", async (req, res) => {
+mediaRouter.delete("/delete/:publicId", async (req, res) => {
   try {
-    const { id } = req.params;
+    const { publicId } = req.params;
 
-    if (!id) {
+    if (!publicId) {
       return res.status(400).json({
         success: false,
         message: "Asset ID is required",
       });
     }
 
-    await deleteMediaFromCloudinary(id);
+    await deleteMediaFromCloudinary(publicId);
 
     res.status(200).json({
       success: true,

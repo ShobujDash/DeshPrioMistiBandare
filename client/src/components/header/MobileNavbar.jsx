@@ -61,7 +61,7 @@ const MobileNavbar = () => {
           className="flex flex-row items-center gap-2 cursor-pointer"
         >
           <img src={logo} className="w-7 object-cover" alt="logo" />
-          <p className="text-headingColor text-[25px] font-bold">দেশপ্রেমিক</p>
+          <p className="text-headingColor text-[25px] font-bold">দেশপ্রিয়</p>
         </Link>
       </div>
 

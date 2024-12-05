@@ -52,8 +52,8 @@ const CategoryModal = ({ isOpen, onClose, pageName }) => {
   };
 
   return (
-    <div className="fixed ml-20 sm:ml-0 inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="relative w-full max-w-2xl bg-white rounded-lg shadow-lg dark:bg-gray-800">
+    <div className="fixed ml-16 sm:ml-0 inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="relative w-full max-w-2xl  ml-1 mr-1 sm:ml-0 sm:mr-0 bg-white rounded-lg shadow-lg dark:bg-gray-800">
         {/* Modal Header */}
         <div className="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-700">
           <h3 className="text-xl font-semibold dark:text-white">
