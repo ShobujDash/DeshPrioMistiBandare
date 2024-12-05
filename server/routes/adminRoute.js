@@ -1,4 +1,5 @@
 const express = require("express");
+
 const AuthVerification = require("../middlewares/AuthVerification");
 const {
   addProduct,
@@ -6,6 +7,7 @@ const {
   deleteCategoryById,
   deleteProductById,
 } = require("../controllers/AdminController");
+
 const { getAllUsers } = require("../controllers/userController");
 
 const adminRouter = express.Router();
