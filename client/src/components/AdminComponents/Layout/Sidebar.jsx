@@ -300,9 +300,9 @@ const Sidebar = ({ toggle }) => {
           </Link>
         </li>
         <li>
-          <Link to="#" className="logout">
+          <Link to="/" className="logout">
             <i className="bx bxs-log-out-circle"></i>
-            <span>Logout</span>
+            <span>HomePage</span>
           </Link>
         </li>
       </ul>

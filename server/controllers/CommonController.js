@@ -2,7 +2,7 @@
 const CategoryModel = require("../models/CategoryModel");
 const ProductModel = require("../models/ProductModle");
 
-
+// Get all category
 const getAllCategories = async (req, res, next) => {
   try {
     // Fetch all categories sorted by creation time (newest first)
@@ -22,7 +22,7 @@ const getAllCategories = async (req, res, next) => {
   }
 };
 
-
+// Get all product
 const getAllProducts = async (req, res, next) => {
   try {
     // Fetch all categories from the database

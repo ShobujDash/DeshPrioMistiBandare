@@ -23,19 +23,19 @@ const ProductCard = ({ product }) => {
       <div className="w-full h-full flex flex-col items-center justify-between py-4">
         <motion.img
           whileHover={{ scale: 1.2 }}
-          src={product.photo}
-          alt={product.name}
+          src={product?.image}
+          alt={product?.productName}
           className="w-[130px] h-[130px] max-w-[120px] drop-shadow-2xl"
         />
         <div className="w-full flex flex-col items-center justify-center px-4">
           <div className="flex flex-col items-center">
-            <h2 className="text-lg font-semibold">{product.name}</h2>
-            <p className="text-gray-600 mb-4">{product.description}</p>
+            <h2 className="text-lg font-semibold">{product?.productName}</h2>
+            <p className="text-gray-600 mb-4">{product?.shortDes}</p>
           </div>
           <div className="flex flex-row items-center justify-between w-full">
             <p className="text-3xl text-headingColor font-semibold">
               <span className="text-red-500">$</span>
-              {product.price}
+              {product?.price}
             </p>
             <button
               onClick={handleAdd}

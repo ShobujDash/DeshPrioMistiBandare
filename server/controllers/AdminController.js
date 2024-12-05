@@ -1,7 +1,6 @@
 const CategoryModel = require("../models/CategoryModel");
 const ProductModel = require("../models/ProductModle");
 
-
 // API to register user
 const addCategory = async (req, res, next) => {
   try {
@@ -56,7 +55,6 @@ const addCategory = async (req, res, next) => {
   }
 };
 
-
 // API for user login
 const addProduct = async (req, res, next) => {
   try {
@@ -68,15 +66,14 @@ const addProduct = async (req, res, next) => {
     }
 
     const {
-      productId, // Add productId for update
+      productID,
       categoryID,
+      productName,
       title,
-      shortDes,
-      price,
-      descount,
-      descountPrice,
       image,
-      stock,
+      price,
+      imageId,
+      shortDes,
     } = req.body;
 
     // Validate required fields
@@ -89,21 +86,20 @@ const addProduct = async (req, res, next) => {
     // Create a product data object
     const productData = {
       categoryID,
+      productName,
       title,
-      shortDes,
-      price,
-      descount,
-      descountPrice,
       image,
-      stock,
+      price,
+      imageId,
+      shortDes,
     };
 
     let result;
 
-    if (productId) {
+    if (productID) {
       // Update existing product
       result = await ProductModel.findByIdAndUpdate(
-        productId,
+        productID,
         { $set: productData },
         { new: true, upsert: false } // `new: true` returns the updated document
       );
@@ -172,10 +168,10 @@ const deleteProductById = async (req, res, next) => {
       return res.status(403).json({ success: false, message: "Unauthorized" });
     }
 
-    const { productId } = req.params;
+    const { productID } = req.params;
 
     // Find the product by ID and delete it
-    const deletedProduct = await ProductModel.findByIdAndDelete(productId);
+    const deletedProduct = await ProductModel.findByIdAndDelete(productID);
 
     // If the product is not found
     if (!deletedProduct) {
@@ -193,11 +189,9 @@ const deleteProductById = async (req, res, next) => {
   }
 };
 
-
-
 module.exports = {
   addCategory,
   addProduct,
   deleteCategoryById,
-  deleteProductById
+  deleteProductById,
 };

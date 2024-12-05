@@ -1,10 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
+
 import instance from "../axios";
 
 const FileUpload = ({ onUploadComplete, onLoading }) => {
   const [uploadStatus, setUploadStatus] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  onLoading(isLoading)
+  onLoading(isLoading);
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -51,6 +52,7 @@ const FileUpload = ({ onUploadComplete, onLoading }) => {
         type="file"
         className="block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-100"
         onChange={handleFileChange}
+        required
       />
       {isLoading && <p className="mt-2 text-blue-500">Uploading...</p>}
       {uploadStatus && (

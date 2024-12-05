@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Element } from "react-scroll";
-import { products } from "../../utils/api/productApi";
 import Filter from "./Filter/Filter";
 import MenuContainer from "./MenuContainer";
 import Pagination from "./Pagination";
 import ProductCard from "./ProductCard";
+import instance from "../../axios";
 
 const Category = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -19,25 +19,43 @@ const Category = () => {
     setCurrentPage(1); // Reset to the first page on category change
   };
 
-  // const allProducts = selectedCategory === 'Electronics' && data ? data : products;
-  // const combinedProducts = selectedCategory === 'All' && data
-  //   ? [...products, ...data]
-  //   : allProducts;
 
-  // const filteredProducts = combinedProducts.filter((product) =>
-  //   (selectedCategory === "All" || product.category === selectedCategory) &&
-  //   product.name.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
 
-  // if(isLoading) return <div>Loading...</div>
-  // if(error) return <div>Error : ${error.status}</div>
-  // if(!data) return <div> No Data Found</div>
 
-  // Pagination logic
-  // const indexOfLastProduct = currentPage * productsPerPage;
-  // const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  // const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
-  // const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+   const [products, setProducts] = useState([]);
+   const [loading, setLoading] = useState(false);
+   const [error, setError] = useState(null);
+
+   const getAllCategoirsData = async () => {
+     setLoading(true);
+     setError(null);
+     try {
+      const { data } = await instance.get("/api/common/getAllProducts");
+       if (data?.success) {
+         setProducts(data?.products || []);
+       } else {
+         setProducts([]);
+         setError("Failed to fetch categories.");
+       }
+     } catch (err) {
+       console.error(err);
+       setError("An error occurred while fetching categories.");
+     } finally {
+       setLoading(false);
+     }
+   };
+
+   console.log(products);
+
+   useEffect(() => {
+     getAllCategoirsData();
+   }, []);
+
+   if (loading) return <p>Loading categories...</p>;
+   if (error) return <p>{error}</p>;
+
+
+
 
   return (
     <Element className="w-full element" name="menu">

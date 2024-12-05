@@ -13,7 +13,7 @@ const Header = () => {
       <div className="hidden md:flex w-full h-full items-center justify-between">
         <Link to={"/"} className="flex items-center gap-2 cursor-pointer">
           <img src={logo} className="w-8 object-cover" alt="logo" />
-          <p className="text-headingColor text-2xl font-bold">দেশপ্রেমিক</p>
+          <p className="text-headingColor text-2xl font-bold">দেশপ্রিয়</p>
         </Link>
 
         {/* Dextop NavBar */}
