@@ -1,5 +1,6 @@
 const CategoryModel = require("../models/CategoryModel");
 const ProductModel = require("../models/ProductModle");
+const UserModel = require("../models/UserModel");
 
 // API to register user
 const addCategory = async (req, res, next) => {
@@ -189,9 +190,155 @@ const deleteProductById = async (req, res, next) => {
   }
 };
 
+// Add Product for user 
+// Push or update a product in the user's products array
+const pushOrUpdateProductToUser = async (req, res) => {
+  const { userId, productId, price } = req.body;
+
+  if (!userId || !productId || !price) {
+    return res
+      .status(404)
+      .json({
+        success: false,
+        message: "Provide all inputs",
+      });
+  }
+
+  try {
+    // Validate productId exists in the ProductModel
+    const productExists = await ProductModel.findById(productId);
+    if (!productExists) {
+      return res.status(404).json({ message: "Product not found!" });
+    }
+
+    // Find the user
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    // Check if the product already exists in the user's products array
+    const existingProduct = user.products.find(
+      (p) => p.productId.toString() === productId
+    );
+
+    if (existingProduct) {
+      // Update the price and quantity of the existing product
+      existingProduct.price = price;
+    } else {
+      // Push the new product with specified price and quantity
+      user.products.push({ productId, price });
+    }
+
+    // Save the updated user document
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Product updated successfully in user's products list.",
+      products: user.products,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Server Error!" });
+  }
+};
+
+// delete product from user
+// const deleteProductFromUser = async (req, res) => {
+//   const { userId, productId } = req.body;
+
+//   if (!userId || !productId) {
+//     return res.status(400).json({
+//       success: false,
+//       message: "Provide both userId and productId",
+//     });
+//   }
+
+//   try {
+//     // Find the user and update their products array
+//     const user = await UserModel.findById(userId);
+//     if (!user) {
+//       return res
+//         .status(404)
+//         .json({ success: false, message: "User not found!" });
+//     }
+
+//     // Filter out the product with the specified productId
+//     const initialLength = user.products.length;
+//     user.products = user.products.filter(
+//       (product) => product.productId.toString() !== productId
+//     );
+
+//     // Check if a product was removed
+//     if (user.products.length === initialLength) {
+//       return res
+//         .status(404)
+//         .json({ success: false, message: "Product not found in user's list!" });
+//     }
+
+//     // Save the updated user document
+//     await user.save();
+
+//     return res.status(200).json({
+//       success: true,
+//       message: "Product removed successfully from user's products list.",
+//       products: user.products,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ success: false, message: "Server Error!" });
+//   }
+// };
+const deleteProductFromUser = async (req, res) => {
+  const { userId, productId } = req.query; // Use query instead of body
+
+  if (!userId || !productId) {
+    return res.status(400).json({
+      success: false,
+      message: "Provide both userId and productId",
+    });
+  }
+
+  try {
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found!" });
+    }
+
+    const initialLength = user.products.length;
+    user.products = user.products.filter(
+      (product) => product.productId.toString() !== productId
+    );
+
+    if (user.products.length === initialLength) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Product not found in user's list!" });
+    }
+
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Product removed successfully from user's products list.",
+      products: user.products,
+    });
+  } catch (error) {
+    console.error("Error in deleteProductFromUser:", error);
+    return res.status(500).json({ success: false, message: "Server Error!" });
+  }
+};
+
+
+
 module.exports = {
   addCategory,
   addProduct,
   deleteCategoryById,
   deleteProductById,
+  pushOrUpdateProductToUser,
+  deleteProductFromUser,
 };

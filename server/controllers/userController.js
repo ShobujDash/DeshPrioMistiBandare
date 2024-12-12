@@ -90,54 +90,26 @@ const UserProfileDetails = async (req,res) => {
   }
 };
 
+// get single user for admin
+const GetUserByParams = async (req,res) => {
+  try {
+    let { id } = req.params;
 
+    let data = await UserModel.find({ _id: id }).select("-password").populate({
+      path: "products.productId", // Path to populate
+      model: "products", // Referencing the ProductModel
+    });
+        
 
-// // API to get user profile data
-// const getProfile = async (req, res, next) => {
-//   try {
-//     const { userId } = req.body;
-//     const userData = await userModel.findById(userId).select("-password");
+    res.status(200).json({
+      success: true,
+      user: data[0],
+    });
+  } catch (error) {
+    return { status: "fail", message: "Something went wrong" };
+  }
+};
 
-//     res.status(200).json({ success: true, userData });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
-// // API to update user profile
-// const updateProfile = async (req, res, next) => {
-//   try {
-//     const { userId, name, phone, address, dob, gender } = req.body;
-
-//     const imgeFile = req.file;
-
-//     if (!name || !phone || !dob || !gender) {
-//       return res.status(400).json({ success: false, message: "Data Missing" });
-//     }
-
-//     await userModel.findByIdAndUpdate(userId, {
-//       name,
-//       phone,
-//       address: JSON.parse(address),
-//       dob,
-//       gender,
-//     });
-
-//     if (imgeFile) {
-//       // upload image to cloudinary
-//       const imageUpload = await cloudinary.uploader.upload(imgeFile.path, {
-//         resource_type: "image",
-//       });
-//       const imageURL = imageUpload.secure_url;
-
-//       await userModel.findByIdAndUpdate(userId, { image: imageURL });
-//     }
-
-//     res.status(200).json({ success: true, message: "Profile Updated" });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
 
 
 // API for user logout
@@ -167,7 +139,7 @@ const logoutUser = (req, res) => {
 const getAllUsers = async (req, res, next) => {
   try {
     // Fetch all users from the database
-    const users = await UserModel.find();
+    const users = await UserModel.find().select("-password");
 
     // If no users are found
     if (!users || users.length === 0) {
@@ -190,4 +162,5 @@ module.exports = {
   UserProfileDetails,
   logoutUser,
   getAllUsers,
+  GetUserByParams,
 };

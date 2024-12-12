@@ -6,6 +6,8 @@ const {
   addCategory,
   deleteCategoryById,
   deleteProductById,
+  pushOrUpdateProductToUser,
+  deleteProductFromUser,
 } = require("../controllers/AdminController");
 
 const { getAllUsers } = require("../controllers/userController");
@@ -21,5 +23,25 @@ adminRouter.delete(
 adminRouter.post("/addProduct", AuthVerification, addProduct);
 adminRouter.delete("/delete-product/:productID", AuthVerification, deleteProductById);
 adminRouter.get("/getAllUsers", AuthVerification, getAllUsers);
+
+adminRouter.post(
+  "/add-or-update-users-product",
+  AuthVerification,
+  pushOrUpdateProductToUser
+);
+adminRouter.post(
+  "/add-or-update-users-product",
+  AuthVerification,
+  pushOrUpdateProductToUser
+);
+
+adminRouter.delete(
+  "/delete-users-product",
+  AuthVerification,
+  deleteProductFromUser
+);
+
+
+
 
 module.exports = adminRouter;
