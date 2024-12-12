@@ -1,6 +1,6 @@
 const CategoryModel = require("../models/CategoryModel");
 const ProductModel = require("../models/ProductModle");
-const UserModel = require("../models/UserModel");
+const UserModel = require("../models/userModel");
 
 // API to register user
 const addCategory = async (req, res, next) => {
