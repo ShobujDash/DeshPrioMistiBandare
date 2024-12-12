@@ -6,6 +6,7 @@ const {
   loginUser,
   UserProfileDetails,
   logoutUser,
+  GetUserByParams,
 } = require("../controllers/userController");
 
 const userRouter = express.Router();
@@ -15,5 +16,6 @@ userRouter.post("/login", loginUser);
 userRouter.post("/logout", logoutUser);
 
 userRouter.get("/getProfile", AuthVerification, UserProfileDetails);
+userRouter.get("/:id", AuthVerification, GetUserByParams);
 
 module.exports = userRouter;

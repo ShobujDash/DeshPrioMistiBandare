@@ -9,27 +9,23 @@ const AuthContextProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const { data } = await instance.get("/api/user/getProfile");
+ const fetchUserData = async () => {
+   try {
+     const { data } = await instance.get("/api/user/getProfile");
 
-        if (data?.success) {
-          setUser(data.data)
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    
-    }
-    fetchUserData();
+     if (data?.success) {
+       setUser(data.data);
+     }
+   } catch (error) {
+     console.log(error);
+   }
+ };
+
+
+  useEffect(() => {
+   fetchUserData()
   }, [])
   
- 
-
-
-
-
   const Auth = {
     user,
     setUser

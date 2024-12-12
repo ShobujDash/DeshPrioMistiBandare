@@ -10,10 +10,20 @@ const userSchema = mongoose.Schema(
       default:
         "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png",
     },
-    address: { type: String ,default:"Laksam" },
+    address: { type: String, default: "Laksam" },
     gender: { type: String, default: "Not Selected" },
     phone: { type: String, default: "0000000000" },
-    isAdmin:{type:Boolean,default:false}
+    isAdmin: { type: Boolean, default: false },
+    products: [
+      {
+        productId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "products",
+          required: true,
+        },
+        price: { type: Number, required: true },
+      },
+    ],
   },
   { timestamps: true }
 );

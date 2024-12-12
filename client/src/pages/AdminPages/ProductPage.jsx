@@ -64,7 +64,7 @@ const ProductPage = () => {
         <div className="container mx-auto">
           <Toolbar pageName={"Product"} />
           {/* <Product /> */}
-          <div className="container rounded-sm mx-auto overflow-y-scroll">
+          <div className="container rounded-sm mx-auto">
             <div className="flex flex-col ">
               <div className="overflow-x-auto">
                 <div className="inline-block min-w-full align-middle">

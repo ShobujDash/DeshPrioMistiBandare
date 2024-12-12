@@ -10,7 +10,7 @@ import "./style/adminCss.css";
 import ProductDetails from "./pages/ProductDetails";
 import CategoryPage from "./pages/AdminPages/CetegoryPage";
 import ProductPage from "./pages/AdminPages/ProductPage";
-import DiscountSprtUserPage from "./pages/AdminPages/DiscountSprtUserPage";
+import DiscountSprtUserPage from "./pages/AdminPages/UserProductsAddOrUpdate";
 import TodaysCalculationPage from "./pages/AdminPages/TodaysCalculation";
 import AdminProfilePage from "./pages/AdminPages/AdminProfilePage";
 
