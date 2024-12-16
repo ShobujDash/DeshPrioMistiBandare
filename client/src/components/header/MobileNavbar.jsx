@@ -17,6 +17,8 @@ import { Link, useNavigate } from "react-router-dom";
 import profile from "../../assets/avatar.png";
 import { useCartContext } from "../../Context/CartContext";
 import { useAuthContext } from "../../Context/AuthContex";
+import instance from "../../axios";
+import { toast } from "react-toastify";
 
 const MobileNavbar = () => {
   const [isMenu, setIsMenu] = useState(false);
@@ -35,12 +37,21 @@ const MobileNavbar = () => {
     setIsMenu(!isMenu);
   };
 
-  const handleLogout = (e) => {
+  const handleLogout = async (e) => {
     e.preventDefault();
-    localStorage.removeItem("loggedin");
-    navigate("/login");
+    try {
+      // Call the logout endpoint
+      const { data } = await instance.post("/api/user/logout");
+      if (data?.success) {
+        toast.success("Logout Successfully");
+        navigate("/login");
+      } else {
+        toast.error("Something went wrong.");
+      }
+    } catch (error) {
+      toast.error("Logout failed. Please try again.");
+    }
   };
-
   
 
   return (

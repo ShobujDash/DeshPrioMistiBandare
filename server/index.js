@@ -31,6 +31,7 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
+
 // app.use(
 //   cors({
 //     origin: "http://localhost:5173", // আপনার ফ্রন্টএন্ড URL
