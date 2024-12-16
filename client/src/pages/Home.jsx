@@ -12,7 +12,7 @@ const Home = () => {
 
   return (
     <Layout>
-      <main className="mt-14 md:mt-20 md:px-16 bg-primary px-8 py-4 w-full">
+      <main className="md:px-16 bg-primary px-8 py-4 w-full">
         <MainContainer />
       </main>
     </Layout>
