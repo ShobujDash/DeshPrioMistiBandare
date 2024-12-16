@@ -7,11 +7,16 @@ const Layout = ({ children }) => {
     <>
       <Header />
 
-      {children}
+      <div
+        className="pb-20 sm:pb-5"
+      >
+        {children}
+      </div>
+
       <div className="hidden sm:block">
         <Footer />
       </div>
-      <BottomNavbar/>
+      <BottomNavbar />
     </>
   );
 };
