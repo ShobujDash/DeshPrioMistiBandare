@@ -7,6 +7,6 @@ const commonRouter = express.Router();
 commonRouter.get("/getAllCategory", getAllCategories);
 commonRouter.get("/category/:id", getCategoryById);
 commonRouter.get("/getAllProducts", getAllProducts);
-commonRouter.get("/product/:id", getProductById);
+commonRouter.get("/product/:productId", getProductById);
 
 module.exports = commonRouter;

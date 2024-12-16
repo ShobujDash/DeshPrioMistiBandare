@@ -13,6 +13,9 @@ import ProductPage from "./pages/AdminPages/ProductPage";
 import DiscountSprtUserPage from "./pages/AdminPages/UserProductsAddOrUpdate";
 import TodaysCalculationPage from "./pages/AdminPages/TodaysCalculation";
 import AdminProfilePage from "./pages/AdminPages/AdminProfilePage";
+import ProtectedRoutes from "./services/ProtectedRoutes";
+import UserProfilePage from "./pages/UserProfilePage";
+import OrderPage from "./pages/OrderPage";
 
 function App() {
   return (
@@ -20,8 +23,14 @@ function App() {
       <div className="w-screen h-screen flex flex-col bg-primary">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/product/details" element={<ProductDetails />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
 
+          <Route path="/order" element={<OrderPage />} />
+          <Route path="/cart" element={<OrderPage />} />
+          <Route path="/reels" element={<OrderPage />} />
+          <Route path="/message" element={<OrderPage />} />
+
+          {/* Admin Route */}
           <Route element={<AdminProtectedRoutes />}>
             <Route path="/admin" element={<AdminDashboardPage />} />
             <Route path="/admin/categroy" element={<CategoryPage />} />
@@ -36,6 +45,12 @@ function App() {
             />
 
             <Route path="/admin/profile" element={<AdminProfilePage />} />
+          </Route>
+
+          {/* User Route */}
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/profile" element={<UserProfilePage />} />
+            <Route path="/order" element={<UserProfilePage />} />
           </Route>
 
           {/* Public Routes */}
