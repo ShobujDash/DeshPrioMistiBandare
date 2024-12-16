@@ -16,7 +16,7 @@ const ProductPage = () => {
   const { getAllProductsData, products, setProducts } = useAdminContext();
 
   let publicId = selectedProduct?.imageId.split("/")[1];
-  console.log(publicId);
+  // console.log(publicId);
 
   // const getAllProductsData = async () => {
   //   try {

@@ -40,7 +40,7 @@
     
                     </div>
                 </div>
-                <div className=' md:w-3/4 w-full flex md:flex-row flex-col grid md:grid-cols-3 grid-cols-2 gap-6 p-8 xl:px-20 md:px-10 px-4'>
+                <div className=' md:w-3/4 w-full grid md:grid-cols-3 grid-cols-2 gap-6 p-8 xl:px-20 md:px-10 px-4'>
                     <div className='  space-y-3'>
                     <div>
                         <h1 className='text-secondary text-[20px] font-extrabold'>About</h1>

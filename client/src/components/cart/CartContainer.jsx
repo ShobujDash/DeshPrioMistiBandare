@@ -34,12 +34,12 @@ const CartContainer = () => {
       className={`fixed top-0 right-0 ${
         isFullScreen ? "w-full h-full" : "md:w-[470px] w-full h-screen"
       } bg-white drop-shadow-md flex flex-col z-[101]`}
+
     >
       <div className="w-full flex items-center justify-between p-4 cursor-pointer">
         <div className="flex items-center gap-2">
           <motion.div
             whileTap={{ scale: 0.75 }}
-            // onClick={() => dispatch(toggleCart())}
             onClick={() => toggleCartVisibility()}
             className="bg-gray-100 rounded-sm px-1 py-[2px] hover:shadow-md"
           >

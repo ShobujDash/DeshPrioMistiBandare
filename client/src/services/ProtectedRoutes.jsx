@@ -1,12 +1,13 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom';
+import { useAuthContext } from '../Context/AuthContex';
 
 const ProtectedRoutes = () => {
-    const auth = localStorage.getItem("loggedin");
+  const { user } = useAuthContext();
   return (
     <div>
         {
-            auth ? <Outlet /> : <Navigate to={"/login"} />
+            user ? <Outlet /> : <Navigate to={"/"} />
         }
     </div>
   )

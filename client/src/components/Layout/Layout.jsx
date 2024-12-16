@@ -1,19 +1,19 @@
-import React from 'react'
-import Header from '../header/Header'
-import MainContainer from "../home/MainContainer";
-import Footer from '../footer/Footer'
+import BottomNavbar from "../footer/BottomNavbar";
+import Footer from "../footer/Footer";
+import Header from "../header/Header";
 
-const Layout = ({children}) => {
+const Layout = ({ children }) => {
   return (
     <>
       <Header />
-      
-      {
-        children
-      }
-      <Footer />
+
+      {children}
+      <div className="hidden sm:block">
+        <Footer />
+      </div>
+      <BottomNavbar/>
     </>
   );
-}
+};
 
-export default Layout
+export default Layout;

@@ -12,8 +12,11 @@ export default function Lightbox({
   return (
     <>
       <article className="bg-black bg-opacity-75 fixed top-0 left-0 right-0 bottom-0 z-50">
-        <button onClick={() => setShowLightbox(false)}>
-          <IoMdClose className="w-10 absolute top-10 right-10 text-white font-bold text-4xl" />
+        <button
+          className="bg-transparent bg-gray-500 rounded-full hover:bg-gray-800 cursor-pointer"
+          onClick={() => setShowLightbox(false)}
+        >
+          <IoMdClose className="w-10 absolute top-10 right-10 text-white font-bold text-4xl cursor-pointer" />
         </button>
 
         <div className="flex items-center justify-center h-screen">
