@@ -16,6 +16,8 @@ import AdminProfilePage from "./pages/AdminPages/AdminProfilePage";
 import ProtectedRoutes from "./services/ProtectedRoutes";
 import UserProfilePage from "./pages/UserProfilePage";
 import OrderPage from "./pages/OrderPage";
+import CartPage from "./pages/CartPage";
+import MessagePage from "./pages/MessagePage";
 
 function App() {
   return (
@@ -26,9 +28,9 @@ function App() {
           <Route path="/product/:id" element={<ProductDetails />} />
 
           <Route path="/order" element={<OrderPage />} />
-          <Route path="/cart" element={<OrderPage />} />
-          <Route path="/reels" element={<OrderPage />} />
-          <Route path="/message" element={<OrderPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/reels" element={<MessagePage />} />
+          <Route path="/message" element={<MessagePage />} />
 
           {/* Admin Route */}
           <Route element={<AdminProtectedRoutes />}>

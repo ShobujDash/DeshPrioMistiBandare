@@ -66,7 +66,6 @@
 //      }
 //    }, [product]);
 
-
 //   const nextSlide = () => {
 //     if (slideIndex !== products.length) {
 //       setSlideIndex(slideIndex + 1);
@@ -219,24 +218,13 @@
 
 // export default ProductDetails;
 
-
-
-
-
-
-
-
-
-
-
 import { useEffect, useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { FaMinus, FaPlus } from "react-icons/fa";
-import Lightbox from "../components/product/Lightbox";
-import "../style/ProductDetails.css";
+import { FaChevronLeft, FaChevronRight, FaMinus, FaPlus } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import instance from "../axios";
+import Lightbox from "../components/product/Lightbox";
+import "../style/ProductDetails.css";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -273,17 +261,20 @@ function ProductDetails() {
         },
         {
           id: 2,
-          mainImage: product.image,
+          mainImage:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfx6RK0hEwBSSo10mfwgLu-mTs3kUTM_pQKiSeOb_LYeqywl88X43cT_aSZvIh1qa89Ow&usqp=CAU",
           thumbnail: "product2Thumbnail",
         },
         {
           id: 3,
-          mainImage: product.image,
+          mainImage:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJ7KInQmflJL-HdQWdGpJNpsVxtbI8Peba29j1WN7gk9ttDVVmI98aIH_Zz74hsDnASGk&usqp=CAU",
           thumbnail: "product3Thumbnail",
         },
         {
           id: 4,
-          mainImage: product.image,
+          mainImage:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfx6RK0hEwBSSo10mfwgLu-mTs3kUTM_pQKiSeOb_LYeqywl88X43cT_aSZvIh1qa89Ow&usqp=CAU",
           thumbnail: "product4Thumbnail",
         },
       ];
@@ -338,7 +329,7 @@ function ProductDetails() {
                 <img
                   src={item.mainImage}
                   alt=""
-                  className="w-full lg:rounded-2xl cursor-pointer"
+                  className="w-full rounded-2xl lg:rounded-2xl cursor-pointer"
                   onClick={() => setShowLightbox(true)}
                 />
 
@@ -396,29 +387,35 @@ function ProductDetails() {
             {product?.productName}
           </h1>
           <p className="text-slate-600 mb-5 leading-relaxed">
-            {product?.title}
+            {product?.title} 
           </p>
           <p className="text-slate-600 mb-10 leading-relaxed">
-            {product?.shortDes}
+            {product?.shortDes} |
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet
+              minima quasi quam voluptatem culpa dignissimos dolor nihil ea in
+              quia?
+            </p>
           </p>
 
           <div className="flex flex-wrap items-center justify-between lg:flex-col lg:items-start lg:gap-2">
             <ul className="flex items-center gap-5">
-              <li className="text-slate-900 font-bold text-2xl">$125.00</li>
+              <li className="text-slate-900 font-bold text-2xl">
+                ৳{product?.price}
+              </li>
               <li className="bg-orange-100 py-1 px-2 text-orange-400 tracking-wide text-sm font-bold inline-block rounded shadow">
-                50%
+                0%
               </li>
             </ul>
 
             <p className="text-slate-600 text-sm">
-              <s>$250.00</s>
+              <s>৳{product?.price}</s>
             </p>
           </div>
 
-          <div className="mt-10 lg:flex items-center justify-between gap-2">
+          <div className="mt-10 lg:flex  items-center justify-between gap-2">
             <ul className="flex items-center justify-between bg-slate-100 py-2 px-4 rounded shadow lg:flex-1">
               <li onClick={handleMinus} className="cursor-pointer">
-                {/* <img src={minus} alt="" /> */}
                 <FaMinus />
               </li>
               <li>{amount}</li>
@@ -426,7 +423,6 @@ function ProductDetails() {
                 onClick={() => setAmount(amount + 1)}
                 className="cursor-pointer"
               >
-                {/* <img src={plus} alt="" /> */}
                 <FaPlus />
               </li>
             </ul>

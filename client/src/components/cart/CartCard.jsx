@@ -1,13 +1,29 @@
 import { motion } from "framer-motion";
 import { BiMinus, BiPlus, BiTrash } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import instance from "../../axios";
+import { useAuthContext } from "../../Context/AuthContex";
 import { useCartContext } from "../../Context/CartContext";
 
 const CartCard = () => {
-  // const cart = useSelector((state) => state.carts.cart)
-  // const totalPrice = useSelector((state) => state.carts.totalPrice)
-//   const dispatch = useDispatch()
+  const { user } = useAuthContext();
+
   const { cart, totalPrice, addToCart, removeFromCart, decrementItem } =
     useCartContext();
+
+  const transformedCartArray = cart.map((item) => ({
+    productId: user ? item?.productId?._id || item?._id : item?._id,
+    price: item.price,
+    qty: item.qty,
+  }));
+
+  const order = {
+    cartList: transformedCartArray,
+    totalPrice,
+  };
+
+  const navigate = useNavigate();
 
   const handleRemove = (e) => {
     // dispatch(remove(e))
@@ -24,9 +40,27 @@ const CartCard = () => {
     decrementItem(e);
   };
 
-  const DELIVERY_CHARGE = 2.5;
+  const DELIVERY_CHARGE = 0;
   const subTotal = totalPrice;
   const total = subTotal + DELIVERY_CHARGE;
+
+  const handleCheckout = async () => {
+    if (!user) {
+      toast.error("অর্ডার করার জন্য দয়া করে লগইন করুন...");
+    } else {
+      try {
+        const { data } = await instance.post(`/api/order/createOrder`, order);
+        if (data?.success) {
+          toast.success(data?.message);
+          navigate("/order");
+        } else {
+          toast.error(data?.message)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   return (
     <div className="w-full h-full flex flex-col">
@@ -38,28 +72,36 @@ const CartCard = () => {
           >
             <div className="flex items-center gap-6 ">
               <img
-                src={item.photo}
-                alt="cart item"
+                src={user ? item?.productId?.image || item?.image : item?.image}
+                alt={
+                  user
+                    ? item?.productId?.productName || item?.productName
+                    : item?.productName
+                }
                 className="w-16 h-16 max-w-[60px] rounded-full object-contain"
               />
               <div className="flex flex-col ">
-                <p className=" text-sm text-gray-50">{item.name}</p>
+                <p className=" text-sm text-gray-500">
+                  {user
+                    ? item?.productId?.productName || item?.productName
+                    : item?.productName}
+                </p>
                 <p className="text-[13px] block text-gray-300 font-semibold">
-                  <span className="text-red-600">$ </span>
-                  {item.price}
+                  <span className="text-red-600">৳ </span>
+                  {item?.price}
                 </p>
               </div>
             </div>
             <p className="text-center md:flex hidden text-[13px] text-gray-300 font-semibold">
-              <span className="text-red-600">$ </span>
-              {item.price * item.qnty}
+              <span className="text-red-600">৳ </span>
+              {item?.price * item?.qty}
             </p>
             <div className="flex items-center gap-6 ">
               <div className="flex items-center gap-2">
                 <motion.button
                   onClick={
-                    item.qnty <= 1
-                      ? () => handleRemove(item.id)
+                    item?.qty <= 1
+                      ? () => handleRemove(item._id)
                       : () => handleDec(item)
                   }
                   whileTap={{ scale: 0.75 }}
@@ -67,7 +109,7 @@ const CartCard = () => {
                   <BiMinus className="text-gray-50" />
                 </motion.button>
                 <p className="w-5 h-5 p-[13px] rounded-sm bg-cartBg text-gray-50 flex items-center justify-center">
-                  {item.qnty}
+                  {item?.qty}
                 </p>
                 <motion.button
                   onClick={() => handleIncreament(item)}
@@ -77,7 +119,7 @@ const CartCard = () => {
                 </motion.button>
               </div>
               <motion.div
-                onClick={() => handleRemove(item.id)}
+                onClick={() => handleRemove(item._id)}
                 whileTap={{ scale: 0.76 }}
               >
                 <BiTrash size={19} className="cursor-pointer text-red-500" />
@@ -91,14 +133,14 @@ const CartCard = () => {
         <div className="w-full flex items-center justify-between">
           <p className="text-gray-400 text-lg">Sub Total</p>
           <p className="text-lg block text-gray-400 font-semibold">
-            <span className="text-red-600">$ </span>
+            <span className="text-red-600">৳ </span>
             {subTotal}
           </p>
         </div>
         <div className="w-full flex items-center justify-between">
           <p className="text-gray-400 text-lg">Delivery Charge</p>
           <p className="text-lg block text-gray-400 font-semibold">
-            <span className="text-red-600">$ </span>
+            <span className="text-red-600">৳ </span>
             {DELIVERY_CHARGE}
           </p>
         </div>
@@ -106,11 +148,12 @@ const CartCard = () => {
         <div className="w-full flex items-center justify-between">
           <p className="text-gray-400 text-xl font-semibold">Total</p>
           <p className="text-gray-400 text-xl font-semibold">
-            <span className="text-red-600">$ </span>
+            <span className="text-red-600">৳ </span>
             {total}
           </p>
         </div>
         <motion.button
+          onClick={handleCheckout}
           whileTap={{ scale: 0.85 }}
           type="button"
           className="w-full p-2 rounded-lg bg-orange-400 text-gray-50 text-lg my-2 hover:shadow-lg hover:bg-orange-600"

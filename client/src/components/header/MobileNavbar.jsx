@@ -185,7 +185,7 @@ const MobileNavbar = () => {
 
                 <Link to={"/login"}>
                   <p
-                    onClick={handleLogout}
+                    onClick={()=>navigate('/login')}
                     className="m-2 px-2 py-[6px]  flex items-center  bg-gray-200 hover:bg-gray-300 gap-3 cursor-pointer hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base rounded-md shadow-md bg-blue-300"
                   >
                     <MdLogin /> Login{" "}

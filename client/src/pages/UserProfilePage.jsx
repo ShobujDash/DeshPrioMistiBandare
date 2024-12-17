@@ -8,7 +8,7 @@ import { useAuthContext } from "../Context/AuthContex";
 const ProfilePage = () => {
   
   const { user } = useAuthContext();
-  console.log(user)
+
 
 
   return (
