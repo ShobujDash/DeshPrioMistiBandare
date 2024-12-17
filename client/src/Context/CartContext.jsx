@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from "react";
-import { CgGlass } from "react-icons/cg";
 
 const CartContext = createContext(null);
 
@@ -10,23 +9,23 @@ const CartContextProvider = ({ children }) => {
 
   // Function to calculate the total price
   const calculateTotalPrice = (cart) => {
-    return cart.reduce((acc, item) => acc + item.price * item.qnty, 0);
+    return cart.reduce((acc, item) => acc + item.price * item.qty, 0);
   };
 
   // Add an item to the cart
   const addToCart = (newItem) => {
     setCart((prevCart) => {
-      const itemIndex = prevCart.findIndex((item) => item.id === newItem.id);
+      const itemIndex = prevCart.findIndex((item) => item._id === newItem._id);
       let updatedCart;
 
       if (itemIndex >= 0) {
-        // If the item exists, increase its quantity
+        // যদি পণ্যটি আগেই অ্যারেতে থাকে, তাহলে তার পরিমাণ বৃদ্ধি করো
         updatedCart = prevCart.map((item, index) =>
-          index === itemIndex ? { ...item, qnty: item.qnty + 1 } : item
+          index === itemIndex ? { ...item, qty: item.qty + 1 } : item
         );
       } else {
-        // If the item doesn't exist, add it
-        updatedCart = [...prevCart, { ...newItem, qnty: 1 }];
+        // যদি পণ্যটি অ্যারেতে না থাকে, তাহলে এটি যোগ করো
+        updatedCart = [...prevCart, { ...newItem, qty: 1 }];
       }
 
       setTotalPrice(calculateTotalPrice(updatedCart));
@@ -34,10 +33,11 @@ const CartContextProvider = ({ children }) => {
     });
   };
 
+
   // Remove an item from the cart
   const removeFromCart = (itemId) => {
     setCart((prevCart) => {
-      const updatedCart = prevCart.filter((item) => item.id !== itemId);
+      const updatedCart = prevCart.filter((item) => item._id !== itemId);
       setTotalPrice(calculateTotalPrice(updatedCart));
       return updatedCart;
     });
@@ -55,9 +55,9 @@ const CartContextProvider = ({ children }) => {
       const itemIndex = prevCart.findIndex((item) => item.id === itemId);
       let updatedCart;
 
-      if (prevCart[itemIndex].qnty > 1) {
+      if (prevCart[itemIndex].qty > 1) {
         updatedCart = prevCart.map((item, index) =>
-          index === itemIndex ? { ...item, qnty: item.qnty - 1 } : item
+          index === itemIndex ? { ...item, qty: item.qty - 1 } : item
         );
       } else {
         // If quantity is 1, remove the item from the cart

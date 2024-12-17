@@ -51,7 +51,7 @@ const ProductCard = ({ product }) => {
           </div>
           <div className="flex flex-row items-center justify-between w-full">
             <p className="text-3xl text-headingColor font-semibold">
-              <span className="text-red-500">$</span>
+              <span className="text-red-500">৳</span>
               {product?.price}
             </p>
             <button

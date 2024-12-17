@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { IoHomeOutline } from "react-icons/io5";
 import { IoCartOutline } from "react-icons/io5";
@@ -7,35 +8,34 @@ import { FaRegMessage } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 const BottomNavbar = () => {
-   const Menus = [
-    { name: "Home", icon: <IoHomeOutline />, route: "/", dis: "translate-x-0" },
+  const Menus = [
     {
-      name: "Order",
-      icon: <FaBorderAll />,
+      name: "home",
+      icon: <IoHomeOutline />,
+      route:"/",
+      dis: "translate-x-0"
+    },
+    {
+      name: "order", icon: <FaBorderAll />,
       route: "/order",
-      dis: "translate-x-16",
+      dis: "translate-x-16"
     },
     {
-      name: "Cart",
-      icon: <IoCartOutline />,
-      route: "/cart",
-      dis: "translate-x-32",
+      name: "cart", icon: <IoCartOutline />, route: "/cart",
+      dis: "translate-x-32"
     },
     {
-      name: "Reels",
-      icon: <PiVideo />,
-      route: "/reels",
-      dis: "translate-x-48",
+      name: "reels", icon: <PiVideo />, route: "/reels",
+      dis: "translate-x-48"
     },
     {
-      name: "Message",
-      icon: <FaRegMessage />,
-      route: "/message",
-      dis: "translate-x-64",
+      name: "settings", icon: <FaRegMessage />, route: "/message",
+      dis: "translate-x-64"
     },
   ];
 
   const [active, setActive] = useState(0);
+  console.log(active)
 
   // h-screen flex justify-center items-center
 
@@ -48,17 +48,18 @@ const BottomNavbar = () => {
          -top-5 rounded-full `}
           >
             <span
-              className="w-3.5 h-3.5 bg-transparent absolute top-4 -left-[18px]
+              className="w-3.5 h-3.5 bg-transparent absolute top-4 -left-[18px] 
           rounded-tr-[11px] shadow-myShadow1"
             ></span>
             <span
-              className="w-3.5 h-3.5 bg-transparent absolute top-4 -right-[18px]
+              className="w-3.5 h-3.5 bg-transparent absolute top-4 -right-[18px] 
           rounded-tl-[11px] shadow-myShadow2"
             ></span>
           </span>
           {Menus.map((menu, i) => (
-            <li key={i} className="w-16">
+            <div key={i} className="w-16">
               <Link
+                // to={i === active ? menu.route : "#"}
                 to={menu.route}
                 className="flex flex-col text-center pt-6"
                 onClick={() => setActive(i)}
@@ -81,20 +82,13 @@ const BottomNavbar = () => {
                   {menu.name}
                 </span>
               </Link>
-            </li>
+            </div>
           ))}
         </ul>
       </div>
     </div>
   );
-  
-  
-  
-  
 };
 
 export default BottomNavbar;
-
-
-
 
