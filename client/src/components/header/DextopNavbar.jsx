@@ -47,18 +47,24 @@ const DextopNavbar = () => {
   return (
     <div className="flex items-center gap-8">
       <ul className="flex items-center gap-8 ">
-        <li className="text-base text-textColor font-medium hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer">
+        <Link
+          to={"/"}
+          className="text-base text-textColor font-medium hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer">
           {" "}
           Home
-        </li>
-        <li className="text-base text-textColor font-medium hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer">
+        </Link>
+        <Link
+          to={"/order"}
+          className="text-base text-textColor font-medium hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer">
           {" "}
-          Menu
-        </li>
-        <li className="text-base text-textColor font-medium hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer">
+          My Order
+        </Link>
+        <Link
+          to={"/"}
+          className="text-base text-textColor font-medium hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer">
           {" "}
           About Us
-        </li>
+        </Link>
       </ul>
 
       <div
