@@ -1,6 +1,41 @@
+import { useState } from "react";
+import { toast } from "react-toastify";
+import instance from "../axios";
 
 
-const PaymentModal = ({ isOpen, closeModal, price }) => {
+const PaymentModal = ({ isOpen, closeModal, price, orderID }) => {
+  const [inputData, setInputData] = useState({
+    tranNum: "",
+    mobileNum: "",
+  });
+
+  const changeData = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setInputData({
+      ...inputData,
+      [name]: value,
+    });
+  };
+
+  const handlePayment = async () => {
+    try {
+      const { data } = await instance.post("/api/payment/create", {
+        ...inputData,
+        price,
+        orderID,
+      });
+      if (data?.success) {
+        toast.success(data?.message);
+        closeModal();
+      } else {
+        toast.error(data?.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {isOpen && (
@@ -32,8 +67,9 @@ const PaymentModal = ({ isOpen, closeModal, price }) => {
                 </div>
 
                 <p className="text-gray-700 leading-relaxed">
-                  টোটাল এত <strong> {price} </strong> টাকা এই নাম্বার
-                  পেমেন্ট করুন । <br /> <strong> বিকাশ পার্সোনালঃ 01827026482 </strong>। <br />
+                  টোটাল <strong> {price} </strong> টাকা এই নাম্বার পেমেন্ট করুন
+                  । <br /> <strong> বিকাশ পার্সোনালঃ 01827026482 </strong>।{" "}
+                  <br />
                   তারপর আপনার ইমেলের মাধ্যমে সঠিক নির্দেশনা পাঠানো হবে।
                 </p>
               </div>
@@ -58,11 +94,25 @@ const PaymentModal = ({ isOpen, closeModal, price }) => {
               {/* Input and Submit */}
               <div className="mt-5">
                 <input
+                  name="tranNum"
+                  value={inputData.tranNum}
+                  onChange={changeData}
                   type="text"
                   placeholder="আপনার ট্রান্সেকশন নাম্বার লিখুন"
+                  className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-pink-500 mb-2"
+                />
+                <input
+                  name="mobileNum"
+                  value={inputData.mobileNum}
+                  onChange={changeData}
+                  type="text"
+                  placeholder="প্রেরণকৃত নাম্বারটি লিখুন"
                   className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-pink-500"
                 />
-                <button className="w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md mt-3">
+                <button
+                  onClick={handlePayment}
+                  className="w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md mt-3"
+                >
                   কনফার্ম
                 </button>
               </div>

@@ -35,7 +35,7 @@ const BottomNavbar = () => {
   ];
 
   const [active, setActive] = useState(0);
-  console.log(active)
+  // console.log(active)
  
 
   // h-screen flex justify-center items-center

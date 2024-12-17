@@ -1,27 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const CardList = () => {
+
+const CardList = ({ allOrder, allUser, allPayment }) => {
   return (
     <ul className="box-info">
       <li>
         <i className="bx bxs-calendar-check"></i>
         <span className="text">
-          <h3>1020</h3>
-          <p>New Order</p>
+          <h3>{allOrder?.length}</h3>
+          <p>মোট অর্ডার</p>
         </span>
       </li>
       <li>
         <i className="bx bxs-group"></i>
         <span className="text">
-          <h3>2834</h3>
-          <p>Visitors</p>
+          <h3>
+            {allUser?.length} <span>জন</span>{" "}
+          </h3>
+          <p>মোট কাস্টমার সংখ্যা</p>
         </span>
       </li>
       <li>
         <i className="bx bxs-dollar-circle"></i>
         <span className="text">
-          <h3>$2543</h3>
-          <p>Total Sales</p>
+          <h3>
+            {allPayment.reduce((acc, curr) => acc + Number(curr?.price), 0)}{" "}
+            <span>টাকা </span>{" "}
+          </h3>
+          <p>মোট বিক্রয় ঢাকা</p>
         </span>
       </li>
     </ul>

@@ -2,29 +2,7 @@ import React, { useState, useEffect } from "react";
 import people from "../../assets/people.png";
 import instance from "../../axios";
 
-const TableData = () => {
-  const [users, setUsers] = useState([]); // Initialize state properly
-
-  // Function to fetch all users
-  const getAllUser = async () => {
-    try {
-      const { data } = await instance.get("/api/admin/getAllUsers");
-      if (data?.success) {
-        setUsers(data?.users);
-      } else {
-        setUsers([]); // Reset to empty if no data
-      }
-    } catch (error) {
-      console.log("Something went wrong from Dashboard User List");
-      setUsers([]); // Reset to empty on error
-    }
-  };
-
-  // Fetch data on component mount
-  useEffect(() => {
-    getAllUser();
-  }, []);
-
+const TableData = ({ allOrder, allUser }) => {
   return (
     <div className="table-data">
       <div className="order">
@@ -42,36 +20,32 @@ const TableData = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <img src={people} alt="user" />
-                <p>John Doe</p>
-              </td>
-              <td>01-10-2021</td>
-              <td>
-                <span className="status completed">Completed</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img src={people} alt="user" />
-                <p>John Doe</p>
-              </td>
-              <td>01-10-2021</td>
-              <td>
-                <span className="status pending">Pending</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img src={people} alt="user" />
-                <p>John Doe</p>
-              </td>
-              <td>01-10-2021</td>
-              <td>
-                <span className="status process">Process</span>
-              </td>
-            </tr>
+            {allOrder?.length === 0 ? (
+              <li>Not Found</li> // Display "Not Found" if users array is empty
+            ) : (
+              allOrder.slice(0, 3).map((order) => (
+                <tr key={order?._id}>
+                  <td>
+                    <img src={order?.userID?.image} alt="user" />
+                    <p>{order?.userID?.name ? order?.userID?.name : ""}</p>
+                  </td>
+                  <td>{order?.createdAt.split("T")[0]}</td>
+                  <td>
+                    <span
+                      className={`py-1 px-2  ${
+                        order?.order === "pending"
+                          ? "bg-red-600"
+                          : order?.order === "process"
+                          ? "bg-yellow-600"
+                          : "bg-green-300"
+                      } rounded-full text-gray-700`}
+                    >
+                      {order?.order}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
@@ -81,13 +55,16 @@ const TableData = () => {
           <i className="bx bx-plus"></i>
           <i className="bx bx-filter"></i>
         </div>
-       
+
         <ul className="flex flex-col gap-2">
-          {users?.length === 0 ? (
+          {allUser?.length === 0 ? (
             <li>Not Found</li> // Display "Not Found" if users array is empty
           ) : (
-            users.slice(0, 3).map((user, index) => (
-              <li  key={index} className="flex justify-between items-center border-b-2  pb-2">
+            allUser.slice(0, 3).map((user, index) => (
+              <li
+                key={index}
+                className="flex justify-between items-center border-b-2  pb-2"
+              >
                 <div className="flex items-center">
                   <img
                     className="h-16 w-16 rounded-full"
