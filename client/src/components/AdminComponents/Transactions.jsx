@@ -1,6 +1,7 @@
 import React from "react";
 
-const Transactions = () => {
+const Transactions = ({ allPayment }) => {
+  console.log(allPayment)
   return (
     <div className="p-4 mt-5 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
       {/* Card Header */}
@@ -13,7 +14,7 @@ const Transactions = () => {
             This is a list of latest transactions
           </span>
         </div>
-        <div className="items-center sm:flex">
+        {/* <div className="items-center sm:flex">
           <div className="flex items-center">
             <button
               id="dropdownDefault"
@@ -49,7 +50,7 @@ const Transactions = () => {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-2.5 py-1.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
             />
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Table */}
@@ -61,10 +62,11 @@ const Transactions = () => {
                 <thead className="bg-gray-50 dark:bg-gray-700">
                   <tr>
                     {[
+                      "Customer",
                       "Transaction",
-                      "Date & Time",
                       "Amount",
                       "Reference number",
+                      "Date & Time",
                       "Payment method",
                       "Status",
                     ].map((header) => (
@@ -79,7 +81,45 @@ const Transactions = () => {
                 </thead>
                 <tbody className="bg-white dark:bg-gray-800">
                   {/* Example Row */}
-                  <tr className="bg-gray-50 dark:bg-gray-700">
+                  {allPayment?.length === 0 ? (
+                    <li>Not Found</li>
+                  ) : (
+                    allPayment.slice(0, 3).map((payment) => (
+                      <tr
+                        key={payment?._id}
+                        className="bg-gray-50 dark:bg-gray-700"
+                      >
+                        <td className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap dark:text-white">
+                          {payment?.userID?.name ? payment?.userID?.name : ""}
+                        </td>
+                        <td className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap dark:text-white">
+                          <span className="font-semibold">
+                            {payment?.tranNum}
+                          </span>
+                        </td>
+                        <td className="p-4 text-sm font-semibold text-gray-900 whitespace-nowrap dark:text-white">
+                          ৳{payment?.price}
+                        </td>
+                        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                          {payment?.mobileNum}
+                        </td>
+                        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                          {payment?.createdAt?.split("T")[0]}
+                        </td>
+
+                        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                          bkash
+                        </td>
+                        <td className="p-4 whitespace-nowrap">
+                          <span className="bg-purple-100 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-purple-100 dark:bg-gray-700 dark:border-purple-500 dark:text-purple-400">
+                            {payment?.orderID?.order}
+                          </span>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+
+                  {/* <tr className="bg-gray-50 dark:bg-gray-700">
                     <td className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap dark:text-white">
                       Payment from{" "}
                       <span className="font-semibold">Lana Byrd</span>
@@ -101,7 +141,7 @@ const Transactions = () => {
                         In progress
                       </span>
                     </td>
-                  </tr>
+                  </tr> */}
                 </tbody>
               </table>
             </div>

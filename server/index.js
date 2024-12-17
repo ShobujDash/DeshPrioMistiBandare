@@ -4,6 +4,7 @@ const adminRoute = require("./routes/adminRoute");
 const commonRoute = require("./routes/commonRoute");
 const mediaRoute = require("./routes/mediaRoute");
 const orderRoute = require("./routes/orderRoute");
+const paymentRoute = require("./routes/PaymentRoute");
 const app = new express();
 const dotenv = require("dotenv").config();
 
@@ -59,6 +60,7 @@ app.use("/api/admin", adminRoute);
 app.use("/api/common", commonRoute);
 app.use("/api/media", mediaRoute);
 app.use("/api/order", orderRoute);
+app.use("/api/payment", paymentRoute);
 
 // Undefined Route Implement
 app.use("*", (req, res) => {

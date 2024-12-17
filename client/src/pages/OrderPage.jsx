@@ -20,6 +20,7 @@ const OrderPage = () => {
   const [selectedOrder, setSelectedOrder] = useState([]);
   const [selectedOrderTotalPrice, setSelectedOrderTotalPrice] = useState("");
   const [selectedOrderStatus, setSelectedOrderStatus] = useState("");
+  const [selectedOrderId, setSelectedOrderId] = useState("");
   console.log(selectedOrder);
   console.log(orders);
 
@@ -44,7 +45,9 @@ const OrderPage = () => {
         console.log(error);
       }
     })();
-  }, []);
+  }, [isOpen]);
+
+
 
   if (loading)
     return (
@@ -93,6 +96,12 @@ const OrderPage = () => {
         </div>
       </Layout>
     );
+  
+  if(orders.length === 0) return (
+    <Layout>
+      <h1>No Order Found</h1>
+    </Layout>
+  );
 
   return (
     <Layout>
@@ -130,16 +139,23 @@ const OrderPage = () => {
               >
                 {order?.order}
               </p>
-              <button
-                onClick={(e) => {
-                  handlePayment(e);
-                  setSelectedOrderTotalPrice(order?.totalPrice);
-                }}
-                className="bg-blue-400 py-1 px-2 rounded-md text-gray-700 flex items-center gap-2"
-              >
-                <img className="w-6 h-6" src={bksash} alt="bkash" />
-                Payment
-              </button>
+              {order?.payment ? (
+                <button className="py-1 px-2 rounded-md text-gray-500  border-2 border-red-400 flex items-center gap-2 cursor-not-allowed">
+                  পেমেন্ট হয়েছে
+                </button>
+              ) : (
+                <button
+                  onClick={(e) => {
+                    handlePayment(e);
+                    setSelectedOrderTotalPrice(order?.totalPrice);
+                    setSelectedOrderId(order?._id);
+                  }}
+                  className="bg-blue-400 py-1 px-2 rounded-md text-gray-100 flex items-center gap-2"
+                >
+                  <img className="w-6 h-6" src={bksash} alt="bkash" />
+                  পেমেন্ট করুন
+                </button>
+              )}
             </div>
           ))}
         </div>
@@ -281,6 +297,7 @@ const OrderPage = () => {
         isOpen={isOpen}
         closeModal={closeModal}
         price={selectedOrderTotalPrice}
+        orderID={selectedOrderId}
       />
     </Layout>
   );

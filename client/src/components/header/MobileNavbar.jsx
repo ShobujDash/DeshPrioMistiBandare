@@ -118,13 +118,16 @@ const MobileNavbar = () => {
                   >
                     <RiHome3Line /> Home
                   </Link>
-                  <Link
-                    to={"/order"}
-                    onClick={() => setIsMenu(false)}
-                    className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
-                  >
-                    <CgMenuBoxed /> My Order
-                  </Link>
+                
+                  {user && !user.isAdmin ? (
+                    <Link
+                      to={"/order"}
+                      onClick={() => setIsMenu(false)}
+                      className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
+                    >
+                      <CgMenuBoxed /> My Order
+                    </Link>
+                  ) : null}
                   <li
                     onClick={() => setIsMenu(false)}
                     className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
@@ -187,7 +190,7 @@ const MobileNavbar = () => {
 
                 <Link to={"/login"}>
                   <p
-                    onClick={()=>navigate('/login')}
+                    onClick={() => navigate("/login")}
                     className="m-2 px-2 py-[6px]  flex items-center  bg-gray-200 hover:bg-gray-300 gap-3 cursor-pointer hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base rounded-md shadow-md bg-blue-300"
                   >
                     <MdLogin /> Login{" "}

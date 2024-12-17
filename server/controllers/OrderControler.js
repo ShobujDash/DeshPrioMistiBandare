@@ -10,17 +10,15 @@ const createOrder = async (req, res) => {
     const newOrder = new OrderModel({
       userID: user_id,
       cartList,
-      totalPrice
+      totalPrice,
     });
 
     const savedOrder = await newOrder.save();
-    res
-      .status(201)
-      .json({
-        success: true,
-        order: savedOrder,
-        message: "We take your order",
-      });
+    res.status(201).json({
+      success: true,
+      order: savedOrder,
+      message: "We take your order",
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

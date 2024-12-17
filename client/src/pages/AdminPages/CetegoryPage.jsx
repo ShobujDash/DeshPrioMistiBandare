@@ -45,10 +45,10 @@ const CategoryPage = () => {
     <>
       <AdminLayout>
         <Breadcrumb pageName="Category" />
-        <div className="container mx-auto">
+        <div className="mx-auto">
           <Toolbar pageName={"Categroy"} />
 
-          <div className="container rounded-sm mx-auto ">
+          <div className=" rounded-sm mx-auto ">
             <div className="flex flex-col ">
               <div className="overflow-x-auto">
                 <div className="inline-block min-w-full align-middle">

@@ -61,7 +61,7 @@ const ProductPage = () => {
     <>
       <AdminLayout>
         <Breadcrumb pageName="Product" />
-        <div className="container mx-auto">
+        <div className=" mx-auto">
           <Toolbar pageName={"Product"} />
           {/* <Product /> */}
           <div className="container rounded-sm mx-auto">
