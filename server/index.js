@@ -4,7 +4,7 @@ const adminRoute = require("./routes/adminRoute");
 const commonRoute = require("./routes/commonRoute");
 const mediaRoute = require("./routes/mediaRoute");
 const orderRoute = require("./routes/orderRoute");
-const paymentRoute = require("./routes/PaymentRoute");
+const paymentRoute = require("./routes/paymentRoute");
 const app = new express();
 const dotenv = require("dotenv").config();
 
