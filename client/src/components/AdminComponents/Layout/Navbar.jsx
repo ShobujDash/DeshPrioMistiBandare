@@ -32,8 +32,6 @@ const Navbar = ({ onHanldeToggle }) => {
     }
   };
 
- 
-
   return (
     <>
       <nav className="h-14 w-full bg-light px-6 flex items-center gap-6 sticky top-0 left-0 z-50 font-lato">
@@ -80,7 +78,7 @@ const Navbar = ({ onHanldeToggle }) => {
         <div className="relative">
           <motion.img
             whileTap={{ scale: 0.8 }}
-            onClick={()=>setIsMenu(!isMenu)}
+            onClick={() => setIsMenu(!isMenu)}
             src={profile}
             className="w-10 min-w-[35px] h-10 -mt-1 min-h-[35px] rounded-full drop-shadow-md cursor-pointer"
             alt="userProfile"

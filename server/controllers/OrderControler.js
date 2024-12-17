@@ -33,7 +33,7 @@ const getOrdersByUserID = async (req, res) => {
 
     // Find orders with the matching userID
     const orders = await OrderModel.find({ userID: user_id })
-      .populate("cartList.productID")
+      .populate("cartList.productId")
       .sort({ createdAt: -1 }); // Sort in descending order of createdAt;
 
     if (orders.length === 0) {
@@ -52,9 +52,9 @@ const getOrdersByUserID = async (req, res) => {
 const getAllOrders = async (req, res) => {
   try {
     const orders = await OrderModel.find()
-      .populate("userID cartList.productID")
+      .populate("userID cartList.productId")
       .sort({ createdAt: -1 }); // Sort in descending order of createdAt;
-    res.status(200).json({ success: true, data: orders });
+    res.status(200).json({ success: true, orders: orders });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -66,7 +66,7 @@ const getSingleOrder = async (req, res) => {
     const { id } = req.params;
 
     const order = await OrderModel.findById(id).populate(
-      "userID cartList.productID"
+      "userID cartList.productId"
     );
     if (!order) {
       return res
@@ -88,7 +88,7 @@ const updateOrder = async (req, res) => {
 
     const updatedOrder = await OrderModel.findByIdAndUpdate(id, updates, {
       new: true,
-    }).populate("userID cartList.productID");
+    }).populate("userID cartList.productId");
 
     if (!updatedOrder) {
       return res

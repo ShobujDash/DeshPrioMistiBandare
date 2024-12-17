@@ -111,18 +111,20 @@ const MobileNavbar = () => {
                 </Link>
 
                 <ul className=" items-center w-full ">
-                  <li
+                  <Link
+                    to={"/"}
                     onClick={() => setIsMenu(false)}
                     className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
                   >
                     <RiHome3Line /> Home
-                  </li>
-                  <li
+                  </Link>
+                  <Link
+                    to={"/order"}
                     onClick={() => setIsMenu(false)}
                     className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"
                   >
-                    <CgMenuBoxed /> Menu
-                  </li>
+                    <CgMenuBoxed /> My Order
+                  </Link>
                   <li
                     onClick={() => setIsMenu(false)}
                     className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor text-base"

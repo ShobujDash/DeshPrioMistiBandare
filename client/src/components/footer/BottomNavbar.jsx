@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoHomeOutline } from "react-icons/io5";
 import { IoCartOutline } from "react-icons/io5";
 import { FaBorderAll } from "react-icons/fa";
@@ -36,6 +36,7 @@ const BottomNavbar = () => {
 
   const [active, setActive] = useState(0);
   console.log(active)
+ 
 
   // h-screen flex justify-center items-center
 
