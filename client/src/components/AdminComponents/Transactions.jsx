@@ -1,19 +1,26 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Transactions = ({ allPayment }) => {
-  console.log(allPayment)
+  const navigate = useNavigate();
   return (
     <div className="p-4 mt-5 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
       {/* Card Header */}
       <div className="items-center justify-between lg:flex">
         <div className="mb-4 lg:mb-0">
           <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-            Transactions
+            সম্প্রীতিক ট্রানজেকশন
           </h3>
           <span className="text-base font-normal text-gray-500 dark:text-gray-400">
-            This is a list of latest transactions
+            এটা সম্প্রীতিক ট্রানজেকশনের একটা তালিকা
           </span>
         </div>
+        <button
+          onClick={() => navigate("/admin/alltransaction")}
+          className="px-3 py-1 border-2 border-green-500 rounded-md hover:bg-green-400 hover:text-white transition duration-300"
+        >
+          সব ট্রানজেকশন
+        </button>
         {/* <div className="items-center sm:flex">
           <div className="flex items-center">
             <button

@@ -12,20 +12,17 @@ const Category = () => {
 
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
 
   // const {data, isLoading, error} = useGetData();
-  const productsPerPage = 8;
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
-    setCurrentPage(1); // Reset to the first page on category change
   };
 
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]); // Stores filtered products
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
 
 
 
@@ -54,14 +51,14 @@ const Category = () => {
 
   const getUserData = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const { data } = await instance.get(`/api/user/${user?._id}`);
       if (data?.success) {
-        setLoading(false)
+        setLoading(false);
         setProducts(data?.user?.products);
       }
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       console.log("soemthign went wrong");
     }
   };
@@ -72,7 +69,26 @@ const Category = () => {
   useEffect(() => {
     getAllCategoirsData();
   }, [user?._id]);
- 
+
+  // Update filteredProducts when selectedCategory changes
+  useEffect(() => {
+    if (selectedCategory === "All") {
+      setFilteredProducts(products);
+    } else {
+      const filtered = products.filter(
+        (product) => {
+          if (user) {
+            return (
+              product?.productId?.categoryID?.categoryName === selectedCategory
+            );
+          } else {
+            return product?.categoryID?.categoryName === selectedCategory;
+          }
+        }
+      );
+      setFilteredProducts(filtered);
+    }
+  }, [selectedCategory, products]);
 
   //  if (loading) return <p>Loading categories...</p>;
   if (loading) return <CardLoadingSkeleton />;
@@ -99,8 +115,8 @@ const Category = () => {
 
           <div className="md:w-4/5 w-full flex flex-col md:items-end md:justify-end  items-center justify-center gap-6">
             <div className="w-full flex flex-wrap md:items-start md:justify-start items-center justify-center gap-4">
-              {products.map((product) => (
-                <ProductCard key={product._id}  product={product} />
+              {filteredProducts.map((product) => (
+                <ProductCard key={product._id} product={product} />
               ))}
             </div>
 

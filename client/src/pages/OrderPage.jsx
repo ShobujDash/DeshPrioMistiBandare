@@ -16,15 +16,15 @@ const OrderPage = () => {
     setIsOpen(false);
   };
 
+  const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState([]);
   const [selectedOrderTotalPrice, setSelectedOrderTotalPrice] = useState("");
   const [selectedOrderStatus, setSelectedOrderStatus] = useState("");
   const [selectedOrderId, setSelectedOrderId] = useState("");
-  console.log(selectedOrder);
-  console.log(orders);
 
-  const [loading, setLoading] = useState(true);
+
+  
 
   const handlePayment = (e) => {
    e.stopPropagation();
@@ -214,7 +214,7 @@ const OrderPage = () => {
                         </div>
                         <p className="text-center md:flex hidden text-[13px] text-gray-300 font-semibold">
                           <span className="text-red-600">৳ </span>
-                          {item?.price * item?.qty}
+                          {item?.price * item?.qnty}
                         </p>
                         <div className="flex items-center gap-6 ">
                           <div className="flex items-center gap-2">

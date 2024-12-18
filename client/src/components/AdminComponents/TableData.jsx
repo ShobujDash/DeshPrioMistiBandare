@@ -1,22 +1,33 @@
 import React, { useState, useEffect } from "react";
 import people from "../../assets/people.png";
 import instance from "../../axios";
+import { useNavigate } from "react-router-dom";
 
 const TableData = ({ allOrder, allUser }) => {
+
+  const navigate = useNavigate();
+
   return (
     <div className="table-data">
       <div className="order">
         <div className="head">
-          <h3>Recent Orders</h3>
+          <h3>সম্প্রীতিক অর্ডার </h3>
+          <button
+            onClick={() => navigate("/admin/allorder")}
+            className="px-3 py-1 border-2 border-green-500 rounded-md hover:bg-green-400 hover:text-white transition duration-300"
+          >
+            সব অর্ডার{" "}
+          </button>
           <i className="bx bx-search"></i>
           <i className="bx bx-filter"></i>
         </div>
         <table>
           <thead>
             <tr>
-              <th>User</th>
-              <th>Date Order</th>
-              <th>Status</th>
+              <th>কাস্টমার </th>
+              <th>অর্ডারের ডেট</th>
+              <th>টাকা</th>
+              <th>স্টেটাস</th>
             </tr>
           </thead>
           <tbody>
@@ -30,6 +41,7 @@ const TableData = ({ allOrder, allUser }) => {
                     <p>{order?.userID?.name ? order?.userID?.name : ""}</p>
                   </td>
                   <td>{order?.createdAt.split("T")[0]}</td>
+                  <td>৳ {order?.totalPrice}</td>
                   <td>
                     <span
                       className={`py-1 px-2  ${
@@ -51,7 +63,13 @@ const TableData = ({ allOrder, allUser }) => {
       </div>
       <div className="todo">
         <div className="head">
-          <h3>User</h3>
+          <h3>কাস্টমার </h3>
+          <button
+            onClick={() => navigate("/admin/alluser")}
+            className="px-3 py-1 border-2 border-green-500 rounded-md hover:bg-green-400 hover:text-white transition duration-300"
+          >
+            সব কাস্টমার{" "}
+          </button>
           <i className="bx bx-plus"></i>
           <i className="bx bx-filter"></i>
         </div>
@@ -65,7 +83,7 @@ const TableData = ({ allOrder, allUser }) => {
                 key={index}
                 className="flex justify-between items-center border-b-2  pb-2"
               >
-                <div className="flex items-center">
+                <div className="flex items-center gap-2">
                   <img
                     className="h-16 w-16 rounded-full"
                     src={user?.image}
