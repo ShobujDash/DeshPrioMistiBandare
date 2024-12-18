@@ -4,7 +4,7 @@ const userSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String },
     image: {
       type: String,
       default:
@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema(
     },
     address: { type: String, default: "Laksam" },
     gender: { type: String, default: "Not Selected" },
-    phone: { type: String, default: "0000000000" },
+    phone: { type: String, default: "" },
     isAdmin: { type: Boolean, default: false },
     products: [
       {

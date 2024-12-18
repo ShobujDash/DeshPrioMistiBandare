@@ -17,7 +17,7 @@ const AuthContextProvider = ({ children }) => {
        setUser(data.data);
      }
    } catch (error) {
-     console.log(error);
+    console.log("auth get problem")
    }
  };
 

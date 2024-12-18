@@ -3,6 +3,7 @@ import { BsFilterRight } from "react-icons/bs";
 import CategoryList from './CategoryList';
 
 const Filter = ({ onCategoryClick, selectedCategory }) => {
+     
   return (
     <div className='w-full hidden sm:block  rounded-xl bg-card hover:bg-white border border-gray-200 pb-8'>
         <div className='flex flex-col gap-4 w-full p-4'>

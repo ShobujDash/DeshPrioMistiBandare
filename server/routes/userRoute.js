@@ -8,6 +8,7 @@ const {
   UserProfileDetails,
   logoutUser,
   GetUserByParams,
+  updateUser,
 } = require("../controllers/userController");
 
 
@@ -19,5 +20,9 @@ userRouter.post("/logout", logoutUser);
 
 userRouter.get("/getProfile", AuthVerification, UserProfileDetails);
 userRouter.get("/:id", AuthVerification, GetUserByParams);
+
+// Update user by ID
+userRouter.put("/updateUser/:id", AuthVerification, updateUser);
+
 
 module.exports = userRouter;

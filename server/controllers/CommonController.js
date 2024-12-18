@@ -26,7 +26,7 @@ const getAllCategories = async (req, res, next) => {
 const getAllProducts = async (req, res, next) => {
   try {
     // Fetch all categories from the database
-    const products = await ProductModel.find();
+    const products = await ProductModel.find().populate("categoryID");
 
     // If no categories are found
     if (!products || products.length === 0) {

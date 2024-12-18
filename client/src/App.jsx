@@ -18,6 +18,9 @@ import UserProfilePage from "./pages/UserProfilePage";
 import OrderPage from "./pages/OrderPage";
 import CartPage from "./pages/CartPage";
 import MessagePage from "./pages/MessagePage";
+import AllorderPage from "./pages/AdminPages/AllorderPage";
+import AlluserPage from "./pages/AdminPages/AlluserPage";
+import AllTranstionPage from "./pages/AdminPages/AllTranstionPage";
 
 function App() {
   return (
@@ -44,6 +47,12 @@ function App() {
             <Route
               path="/admin/todays-calculation"
               element={<TodaysCalculationPage />}
+            />
+            <Route path="/admin/allorder" element={<AllorderPage />} />
+            <Route path="/admin/alluser" element={<AlluserPage />} />
+            <Route
+              path="/admin/alltransaction"
+              element={<AllTranstionPage />}
             />
 
             <Route path="/admin/profile" element={<AdminProfilePage />} />

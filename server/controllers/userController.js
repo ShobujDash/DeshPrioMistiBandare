@@ -76,30 +76,35 @@ const loginUser = async (req, res, next) => {
 };
 
 // get Profile data
-const UserProfileDetails = async (req,res) => {
+const UserProfileDetails = async (req, res) => {
   try {
     let user_id = req.headers.id;
 
     let data = await UserModel.find({ _id: user_id }).select("-password");
-     res.status(200).json({
-       success: true,
-       data:data[0]
-     });
+    res.status(200).json({
+      success: true,
+      data: data[0],
+    });
   } catch (error) {
     return { status: "fail", message: "Something went wrong" };
   }
 };
 
 // get single user for admin
-const GetUserByParams = async (req,res) => {
+const GetUserByParams = async (req, res) => {
   try {
     let { id } = req.params;
 
-    let data = await UserModel.find({ _id: id }).select("-password").populate({
-      path: "products.productId", // Path to populate
-      model: "products", // Referencing the ProductModel
-    });
-        
+    let data = await UserModel.find({ _id: id })
+      .select("-password")
+      .populate({
+        path: "products.productId", // Path to populate
+        model: "products", // Referencing the ProductModel
+        populate: {
+          path: "categoryID", // Nested path to populate categoryID
+          model: "categories", // Replace with your CategoryModel name
+        },
+      });
 
     res.status(200).json({
       success: true,
@@ -109,8 +114,6 @@ const GetUserByParams = async (req,res) => {
     return { status: "fail", message: "Something went wrong" };
   }
 };
-
-
 
 // API for user logout
 const logoutUser = (req, res) => {
@@ -134,7 +137,6 @@ const logoutUser = (req, res) => {
   }
 };
 
-
 // Get All Users For Admin
 const getAllUsers = async (req, res, next) => {
   try {
@@ -155,6 +157,40 @@ const getAllUsers = async (req, res, next) => {
   }
 };
 
+// API to update user details
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;  // Get user ID from the URL params
+    const { name, email, address, phone, isAdmin } = req.body; // Get updated user data from request body
+
+    // Validate the fields
+    if (!name || !email || !address || !phone) {
+      return res.json({ success: false, message: "All fields are required" });
+    }
+
+    // Check if the user exists
+    const user = await UserModel.findById(id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Update user data
+    user.name = name;
+    user.email = email;
+    user.address = address;
+    user.phone = phone;
+    user.isAdmin = isAdmin;
+
+    // Save the updated user data
+    await user.save();
+
+    // Return updated user data
+    res.status(200).json({ success: true, message: "User updated successfully", user });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
 
 module.exports = {
   loginUser,
@@ -163,4 +199,5 @@ module.exports = {
   logoutUser,
   getAllUsers,
   GetUserByParams,
+  updateUser,
 };

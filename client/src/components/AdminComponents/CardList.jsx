@@ -27,7 +27,7 @@ const CardList = ({ allOrder, allUser, allPayment }) => {
             {allPayment.reduce((acc, curr) => acc + Number(curr?.price), 0)}{" "}
             <span>টাকা </span>{" "}
           </h3>
-          <p>মোট বিক্রয় ঢাকা</p>
+          <p>মোট বিক্রয় </p>
         </span>
       </li>
     </ul>

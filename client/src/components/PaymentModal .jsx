@@ -105,7 +105,7 @@ const PaymentModal = ({ isOpen, closeModal, price, orderID }) => {
                   name="mobileNum"
                   value={inputData.mobileNum}
                   onChange={changeData}
-                  type="text"
+                  type="number"
                   placeholder="প্রেরণকৃত নাম্বারটি লিখুন"
                   className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-pink-500"
                 />
