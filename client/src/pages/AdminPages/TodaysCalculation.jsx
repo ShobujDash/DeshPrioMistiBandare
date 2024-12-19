@@ -5,8 +5,10 @@ import Breadcrumb from '../../components/AdminComponents/Breadcrumb';
 const TodaysCalculationPage = () => {
   return (
     <AdminLayout>
-      <Breadcrumb pageName="Today's Calculation" />
-      <h1>Today's Calculation</h1>
+      <Breadcrumb
+        pageName="আজকের হিসাব"
+      />
+      <h1>আজকের হিসাব</h1>
     </AdminLayout>
   );
 }

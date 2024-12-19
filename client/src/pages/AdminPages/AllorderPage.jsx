@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import instance from "../../axios";
 import AdminLayout from "../../components/AdminComponents/Layout/AdminLayout";
-import { toast } from "react-toastify";
 
 const AllorderPage = () => {
   const [allOrder, setAllOrder] = useState([]);
@@ -12,8 +12,8 @@ const AllorderPage = () => {
   const [orderStatus, setOrderStatus] = useState("");
   const [isMobileView, setIsMobileView] = useState(false);
 
-console.log(selectedOrderID)
-
+  console.log(selectedOrder);
+  console.log(isMobileView);
 
   const getAllOrder = async () => {
     try {
@@ -47,11 +47,11 @@ console.log(selectedOrderID)
     };
   }, []);
 
-
   const handleChange = (event) => {
     setOrderStatus(event.target.value);
   };
-  const handleStatusClicked = (oderId) => {
+  const handleStatusClicked = (oderId, e) => {
+    e.stopPropagation();
     setSelectedOrderID(oderId);
     setStatus(true);
   };
@@ -61,35 +61,33 @@ console.log(selectedOrderID)
     order: orderStatus || selectedOrder?.order,
   };
 
-  
-
   useEffect(() => {
-    (
-      async () => {
-        try {
-          setLoading(true)
-          const { data } = await instance.put(
-            `/api/order/updateOrder/${selectedOrderID}`,
-            updateOrder
-          );
-          if (data?.success) {
-            toast.success(data?.message);
-            setLoading(false);
-            setStatus(false);
-            await getAllOrder();
-          } else {
-            toast.error(data?.message);
-            setLoading(false);
-            setStatus(false);
-          }
-        } catch (error) {
-          setLoading(false)
-          setStatus(false)
-          console.log(error)
+    (async () => {
+      try {
+        setLoading(true);
+        const { data } = await instance.put(
+          `/api/order/updateOrder/${selectedOrderID}`,
+          updateOrder
+        );
+        if (data?.success) {
+          toast.success(data?.message);
+          setLoading(false);
+          setStatus(false);
+          await getAllOrder();
+        } else {
+          toast.error(data?.message);
+          setLoading(false);
+          setStatus(false);
         }
+      } catch (error) {
+        setLoading(false);
+        setStatus(false);
+        console.log(error);
       }
-    )()
+    })();
   }, [orderStatus]);
+
+
 
   return (
     <AdminLayout>
@@ -137,9 +135,7 @@ console.log(selectedOrderID)
                       </td>
                       <td>{order?.createdAt.split("T")[0]}</td>
                       <td>৳ {order?.totalPrice}</td>
-                      <td
-                        onClick={()=>handleStatusClicked(order?._id)}
-                      >
+                      <td onClick={(e) => handleStatusClicked(order?._id, e)}>
                         {order?._id === selectedOrderID && status ? (
                           <div>
                             <select
@@ -147,8 +143,9 @@ console.log(selectedOrderID)
                               name="categoryID"
                               className="bg-gray-50 border text-gray-900 text-sm rounded-lg w-[120px] p-2.5 dark:bg-gray-700"
                               value={orderStatus}
-                              onChange={(e)=>handleChange(e)}
+                              onChange={(e) => handleChange(e)}
                             >
+                              <option value="completed">Select One</option>
                               <option value="completed">completed</option>
                               <option value="process">process</option>
                               <option value="pending">pending</option>
@@ -263,6 +260,3 @@ console.log(selectedOrderID)
 };
 
 export default AllorderPage;
-
-
-
