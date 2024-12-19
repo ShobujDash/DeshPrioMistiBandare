@@ -5,10 +5,10 @@ const AuthVerification = require("../middlewares/AuthVerification");
 const router = express.Router();
 
 router.post("/createOrder", AuthVerification, createOrder);
-router.get("/getAllOrders", getAllOrders);
-router.get("/singleOrder/:id", getSingleOrder);
-router.put("/updateOrder/:id", updateOrder);
-router.delete("/deleteOrder/:id", deleteOrder);
+router.get("/getAllOrders",AuthVerification, getAllOrders);
+router.get("/singleOrder/:id",AuthVerification, getSingleOrder);
+router.put("/updateOrder/:id",AuthVerification , updateOrder);
+router.delete("/deleteOrder/:id",AuthVerification, deleteOrder);
 router.get("/getOrdersByUserID", AuthVerification, getOrdersByUserID);
 
 module.exports = router;

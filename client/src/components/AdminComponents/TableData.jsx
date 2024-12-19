@@ -28,6 +28,7 @@ const TableData = ({ allOrder, allUser }) => {
               <th>অর্ডারের ডেট</th>
               <th>টাকা</th>
               <th>স্টেটাস</th>
+              <th>পেমেন্ট </th>
             </tr>
           </thead>
           <tbody>
@@ -37,22 +38,31 @@ const TableData = ({ allOrder, allUser }) => {
               allOrder.slice(0, 3).map((order) => (
                 <tr key={order?._id}>
                   <td>
-                    <img src={order?.userID?.image} alt="user" />
+                    <img className="hidden sm:block" src={order?.userID?.image} alt="user" />
                     <p>{order?.userID?.name ? order?.userID?.name : ""}</p>
                   </td>
                   <td>{order?.createdAt.split("T")[0]}</td>
                   <td>৳ {order?.totalPrice}</td>
                   <td>
                     <span
-                      className={`py-1 px-2  ${
+                      className={`py-1 px-1  ${
                         order?.order === "pending"
                           ? "bg-red-600"
                           : order?.order === "process"
                           ? "bg-yellow-600"
                           : "bg-green-300"
-                      } rounded-full text-gray-700`}
+                      } rounded-md text-gray-700`}
                     >
                       {order?.order}
+                    </span>
+                  </td>
+                  <td>
+                    <span
+                      className={`py-1 px-2 border-2 ${
+                        order?.payment ? "border-green-500" : "border-red-500"
+                      } rounded-md text-gray-700`}
+                    >
+                      {order?.payment ? "হয়েছে " : "হয়নি"}
                     </span>
                   </td>
                 </tr>

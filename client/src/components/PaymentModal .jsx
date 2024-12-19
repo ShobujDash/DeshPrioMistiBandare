@@ -98,6 +98,7 @@ const PaymentModal = ({ isOpen, closeModal, price, orderID }) => {
                   value={inputData.tranNum}
                   onChange={changeData}
                   type="text"
+                  required
                   placeholder="আপনার ট্রান্সেকশন নাম্বার লিখুন"
                   className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-pink-500 mb-2"
                 />
@@ -106,6 +107,7 @@ const PaymentModal = ({ isOpen, closeModal, price, orderID }) => {
                   value={inputData.mobileNum}
                   onChange={changeData}
                   type="number"
+                  required
                   placeholder="প্রেরণকৃত নাম্বারটি লিখুন"
                   className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-pink-500"
                 />
