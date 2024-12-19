@@ -24,7 +24,7 @@ const Sidebar = ({ toggle }) => {
       path: "/admin/product-discount-for-saparate-user",
     },
     {
-      icon: "bxs-message-dots",
+      icon: "bx-calendar-edit",
       text: "Today's Calculation",
       path: "/admin/todays-calculation",
     },
