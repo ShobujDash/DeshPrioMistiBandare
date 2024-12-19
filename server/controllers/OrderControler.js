@@ -94,7 +94,7 @@ const updateOrder = async (req, res) => {
         .json({ success: false, message: "Order not found" });
     }
 
-    res.status(200).json({ success: true, data: updatedOrder });
+    res.status(200).json({ success: true, data: updatedOrder,message:"Order Update successfully." });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

@@ -41,9 +41,9 @@ const Navbar = ({ onHanldeToggle }) => {
         ></i>
         <a
           href="#"
-          className="text-dark text-lg transition-colors duration-300 hover:text-blue"
+          className="text-dark text-xl font-bold transition-colors duration-300 hover:text-blue"
         >
-          DeshPrio
+          দেশপ্রিয়
         </a>
         <form action="#" className="hidden sm:block w-full max-w-lg mr-auto">
           <div className="flex items-center h-9">

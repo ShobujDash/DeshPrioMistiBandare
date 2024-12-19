@@ -149,7 +149,8 @@ const AllTranstionPage =() => {
                           </td>
                           <td className="p-4 whitespace-nowrap">
                             <span className="bg-purple-100 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-purple-100 dark:bg-gray-700 dark:border-purple-500 dark:text-purple-400">
-                              {payment?.orderID?.order}
+                              {/* {payment?.orderID?.order} */}
+                              Success
                             </span>
                           </td>
                         </tr>
