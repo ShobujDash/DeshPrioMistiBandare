@@ -3,9 +3,9 @@ const StoreProductModel = require("../models/StoreProductModel.js");
 // Create a new product
 exports.createProduct = async (req, res) => {
   try {
-    const isExitsProduct = await StoreProductModel.find({{
+    const isExitsProduct = await StoreProductModel.find({
       productName: req.body.productName,
-    }})
+    })
     if (isExitsProduct) {
       return res.status(201).json({ success: false, message: "This Product Is Already Exits" });
     }
