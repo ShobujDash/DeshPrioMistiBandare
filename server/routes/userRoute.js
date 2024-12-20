@@ -1,6 +1,7 @@
 const express = require("express");
 
 const AuthVerification = require("../middlewares/AuthVerification");
+
 const {
   registerUser,
   loginUser,
@@ -9,6 +10,7 @@ const {
   GetUserByParams,
   updateUser,
 } = require("../controllers/userController");
+
 
 const userRouter = express.Router();
 

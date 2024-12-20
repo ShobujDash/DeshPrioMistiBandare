@@ -1,6 +1,6 @@
-
 const CategoryModel = require("../models/CategoryModel");
 const ProductModel = require("../models/ProductModle");
+
 
 // Get all category
 const getAllCategories = async (req, res, next) => {
