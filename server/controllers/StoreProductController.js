@@ -1,19 +1,34 @@
 const StoreProductModel = require("../models/StoreProductModel.js");
 
+
+
 // Create a new product
 exports.createProduct = async (req, res) => {
   try {
-    const isExitsProduct = await StoreProductModel.find(req.body)
+    // প্রোডাক্টের নাম দিয়ে ডাটাবেজ থেকে খোঁজা
+    const isExitsProduct = await StoreProductModel.findOne({
+      productName: req.body.productName,
+    });
+
+    // যদি প্রোডাক্ট পাওয়া যায়
     if (isExitsProduct) {
-      return res.status(201).json({ success: false, message: "This Product Is Already Exits" });
+      return res
+        .status(400)
+        .json({ success: false, message: "This Product Is Already Exists" });
     }
+
+    // যদি প্রোডাক্ট না পাওয়া যায়, নতুন প্রোডাক্ট তৈরি
     const product = new StoreProductModel(req.body);
     const savedProduct = await product.save();
+
+    // সফলভাবে প্রোডাক্ট সংরক্ষণ
     res.status(201).json({ success: true, data: savedProduct });
   } catch (error) {
+    // ত্রুটি থাকলে সেটি রিটার্ন করা
     res.status(400).json({ success: false, error: error.message });
   }
 };
+
 
 // Read all products
 exports.getAllProducts = async (req, res) => {
