@@ -6,6 +6,7 @@ const mediaRoute = require("./routes/mediaRoute");
 const orderRoute = require("./routes/orderRoute");
 const paymentRoute = require("./routes/paymentRoute");
 const todayCalRoute = require("./routes/todayCalculationRoute");
+const storeProductRoute = require("./routes/storeProductRoute");
 const app = new express();
 const dotenv = require("dotenv").config();
 
@@ -27,21 +28,21 @@ connectDB();
 
 // Security Middleware Implement
 app.use(cookieParser());
-// app.use(
-//   cors({
-//     origin: "https://desh-prio-misti-bandare.vercel.app", // আপনার ফ্রন্টএন্ড URL
-//     credentials: true, // Cookie Enable করার জন্য
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//   })
-// );
-
 app.use(
   cors({
-    origin: "http://localhost:5173", // আপনার ফ্রন্টএন্ড URL
+    origin: "https://desh-prio-misti-bandare.vercel.app", // আপনার ফ্রন্টএন্ড URL
     credentials: true, // Cookie Enable করার জন্য
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
+
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173", // আপনার ফ্রন্টএন্ড URL
+//     credentials: true, // Cookie Enable করার জন্য
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//   })
+// );
 
 
 app.use(helmet());
@@ -63,6 +64,7 @@ app.use("/api/media", mediaRoute);
 app.use("/api/order", orderRoute);
 app.use("/api/payment", paymentRoute);
 app.use("/api/todaycal", todayCalRoute);
+app.use("/api/storeproducts", storeProductRoute);
 
 // Undefined Route Implement
 app.use("*", (req, res) => {

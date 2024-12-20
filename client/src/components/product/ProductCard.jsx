@@ -29,18 +29,15 @@ const ProductCard = ({ product }) => {
           src={
             user ? product?.productId?.image || product?.image : product?.image
           }
-          alt={
-            user
-              ? product?.productId?.productName || product?.productName
-              : product?.productName
-          }
+          alt="image"
           className="w-[130px] h-[130px] max-w-[120px] drop-shadow-2xl"
         />
         <div className="w-full flex flex-col items-center justify-center px-4">
           <div className="flex flex-col items-center">
             <h2 className="text-lg font-semibold">
               {user
-                ? product?.productId?.productName || product?.image
+                ? product?.productId?.productName ||
+                  product?.productName
                 : product?.productName}
             </h2>
             <p className="text-gray-600 mb-4">
