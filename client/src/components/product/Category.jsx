@@ -24,8 +24,6 @@ const Category = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-
-
   const getAllCategoirsData = async () => {
     setLoading(true);
     setError(null);
@@ -55,7 +53,17 @@ const Category = () => {
       const { data } = await instance.get(`/api/user/${user?._id}`);
       if (data?.success) {
         setLoading(false);
-        setProducts(data?.user?.products);
+        if (data?.user?.products.length === 0) {
+           const { data } = await instance.get("/api/common/getAllProducts");
+           if (data?.success) {
+             setProducts(data?.products || []);
+           } else {
+             setProducts([]);
+             setError("Failed to fetch categories.");
+           }
+        } else {
+          setProducts(data?.user?.products);
+        }
       }
     } catch (error) {
       setLoading(false);
@@ -75,17 +83,15 @@ const Category = () => {
     if (selectedCategory === "All") {
       setFilteredProducts(products);
     } else {
-      const filtered = products.filter(
-        (product) => {
-          if (user) {
-            return (
-              product?.productId?.categoryID?.categoryName === selectedCategory
-            );
-          } else {
-            return product?.categoryID?.categoryName === selectedCategory;
-          }
+      const filtered = products.filter((product) => {
+        if (user) {
+          return (
+            product?.productId?.categoryID?.categoryName === selectedCategory
+          );
+        } else {
+          return product?.categoryID?.categoryName === selectedCategory;
         }
-      );
+      });
       setFilteredProducts(filtered);
     }
   }, [selectedCategory, products]);

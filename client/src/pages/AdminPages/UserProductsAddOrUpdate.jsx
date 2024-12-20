@@ -18,7 +18,6 @@ const UserProductsAddOrUpdate = () => {
 
   const { products } = useAdminContext();
 
-  console.log(products);
 
   useEffect(() => {
     (async function () {

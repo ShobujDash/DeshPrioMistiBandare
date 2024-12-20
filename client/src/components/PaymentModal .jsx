@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import instance from "../axios";
+import QRCode from "../assets/QR_Code_Bkash_Antar.jpg"
 
 
 const PaymentModal = ({ isOpen, closeModal, price, orderID }) => {
@@ -77,7 +78,7 @@ const PaymentModal = ({ isOpen, closeModal, price, orderID }) => {
               {/* QR Code and bkash */}
               <div className="flex flex-col items-center md:flex-row md:items-center md:justify-between">
                 <img
-                  src="https://via.placeholder.com/200" // Replace with actual QR code link
+                  src={QRCode} // Replace with actual QR code link
                   alt="QR Code"
                   className="w-40 h-40 mb-4 md:mb-0"
                 />
@@ -86,7 +87,7 @@ const PaymentModal = ({ isOpen, closeModal, price, orderID }) => {
                   <p className="font-bold mb-2 text-gray-800">
                     বিকাশ QR স্ক্যান করুন
                   </p>
-                  <strong> 01827026482 </strong>
+                  <strong> 01786153786 </strong>
                   <p className="text-pink-600 text-lg font-semibold">bKash</p>
                 </div>
               </div>
