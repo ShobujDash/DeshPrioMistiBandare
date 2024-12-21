@@ -14,6 +14,7 @@ import { useCartContext } from "../../Context/CartContext";
 
 const DextopNavbar = () => {
   const { user } = useAuthContext();
+  console.log(user)
 
   const [isMenu, setIsMenu] = useState(false);
   const navigate = useNavigate();
@@ -49,19 +50,22 @@ const DextopNavbar = () => {
       <ul className="flex items-center gap-8 ">
         <Link
           to={"/"}
-          className="text-base text-textColor font-medium hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer">
+          className="text-base text-textColor font-medium hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer"
+        >
           {" "}
           Home
         </Link>
         <Link
           to={"/order"}
-          className="text-base text-textColor font-medium hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer">
+          className="text-base text-textColor font-medium hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer"
+        >
           {" "}
           My Order
         </Link>
         <Link
           to={"/"}
-          className="text-base text-textColor font-medium hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer">
+          className="text-base text-textColor font-medium hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer"
+        >
           {" "}
           About Us
         </Link>
@@ -82,8 +86,8 @@ const DextopNavbar = () => {
           <motion.img
             whileTap={{ scale: 0.8 }}
             onClick={login}
-            src={profile}
-            className="w-10 min-w-[35px] h-10 -mt-1 min-h-[35px] drop-shadow-md cursor-pointer"
+            src={user?.image || profile} 
+            className="w-10 min-w-[35px] h-10 -mt-1 min-h-[35px] drop-shadow-md cursor-pointer rounded-full border-2 border-red-300"
             alt="userProfile"
           />
 

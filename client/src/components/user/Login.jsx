@@ -7,6 +7,7 @@ import { useAuthContext } from "../../Context/AuthContex";
 import Loading from "../Loading";
 import "./login.css";
 import instance from "../../axios";
+import OAuth from "../OAuth";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -133,7 +134,7 @@ const Login = () => {
             </button>
 
             <p>or login with social platforms</p>
-            <div className="social-icons">
+            {/* <div className="social-icons">
               <a href="#">
                 <div className="px-6 sm:px-0 max-w-sm">
                   <button
@@ -159,7 +160,8 @@ const Login = () => {
                   </button>
                 </div>
               </a>
-            </div>
+            </div> */}
+            <OAuth/>
           </form>
         </div>
 
@@ -207,7 +209,7 @@ const Login = () => {
               {btnLoader ? <Loading /> : "Register"}
             </button>
             <p>or register with social platforms</p>
-            <div className="social-icons">
+            {/* <div className="social-icons">
               <a href="#">
                 <div className="px-6 sm:px-0 max-w-sm">
                   <button
@@ -233,7 +235,8 @@ const Login = () => {
                   </button>
                 </div>
               </a>
-            </div>
+            </div> */}
+            <OAuth/>
           </form>
         </div>
 

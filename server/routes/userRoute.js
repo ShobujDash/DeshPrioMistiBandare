@@ -9,6 +9,7 @@ const {
   logoutUser,
   GetUserByParams,
   updateUser,
+  google,
 } = require("../controllers/userController");
 
 
@@ -16,6 +17,7 @@ const userRouter = express.Router();
 
 userRouter.post("/register", registerUser);
 userRouter.post("/login", loginUser);
+userRouter.post("/google", google);
 userRouter.post("/logout", logoutUser);
 
 userRouter.get("/getProfile", AuthVerification, UserProfileDetails);
