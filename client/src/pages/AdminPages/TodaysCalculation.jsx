@@ -89,6 +89,7 @@ const TodaysCalculationPage = () => {
         toast.success(`${productName} যুক্ত হয়েছে`);
         setIsOpen(false);
         setProductName("");
+        await getStoreAllProducts();
       } else if (data?.message === "This Product Is Already Exits") {
         setLoading(false);
         toast.error(`${productName} আছে অন্য কিছু যুক্ত করুন`);
