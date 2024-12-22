@@ -13,8 +13,7 @@ import { useAuthContext } from "../../Context/AuthContex";
 import { useCartContext } from "../../Context/CartContext";
 
 const DextopNavbar = () => {
-  const { user } = useAuthContext();
-  console.log(user)
+  const { user, setUser } = useAuthContext();
 
   const [isMenu, setIsMenu] = useState(false);
   const navigate = useNavigate();
@@ -33,6 +32,7 @@ const DextopNavbar = () => {
       if (data?.success) {
         toast.success("Logout Successfully");
         navigate("/login");
+        setUser(null)
       } else {
         toast.error("Something went wrong.");
       }

@@ -22,7 +22,7 @@ import { toast } from "react-toastify";
 
 const MobileNavbar = () => {
   const [isMenu, setIsMenu] = useState(false);
-  const {user} = useAuthContext()
+  const { user, setUser } = useAuthContext();
 
   const navigate = useNavigate();
 
@@ -45,6 +45,7 @@ const MobileNavbar = () => {
       if (data?.success) {
         toast.success("Logout Successfully");
         navigate("/login");
+        setUser(null)
       } else {
         toast.error("Something went wrong.");
       }

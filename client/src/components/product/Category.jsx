@@ -24,6 +24,8 @@ const Category = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+
+
   const getAllCategoirsData = async () => {
     setLoading(true);
     setError(null);
@@ -85,8 +87,10 @@ const Category = () => {
     } else {
       const filtered = products.filter((product) => {
         if (user) {
+
           return (
-            product?.productId?.categoryID?.categoryName === selectedCategory
+            product?.productId?.categoryID?.categoryName === selectedCategory ||
+            product?.categoryID?.categoryName === selectedCategory
           );
         } else {
           return product?.categoryID?.categoryName === selectedCategory;
