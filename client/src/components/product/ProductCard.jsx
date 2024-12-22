@@ -7,8 +7,12 @@ import { useCartContext } from "../../Context/CartContext";
 const ProductCard = ({ product }) => {
   const { user } = useAuthContext();
 
+  console.log(product)
+
   const { addToCart } = useCartContext();
   const navigate = useNavigate();
+
+
 
   const handleAdd = (e) => {
     e.stopPropagation(); // Prevent triggering the navigation when clicking "Add to Cart"
@@ -20,7 +24,15 @@ const ProductCard = ({ product }) => {
       className="w-[260px] h-[270px] flex flex-col bg-card hover:bg-white items-center justify-center gap-4 rounded-xl border border-gray-200 transition-transform duration-500 cursor-pointer"
       // onClick={onClick} // Add navigation functionality
       onClick={() =>
-        navigate(`/product/${user ? product?.productId?._id : product?._id}`)
+        navigate(
+          `/product/${
+            user
+              ? product?.productId
+                ? product?.productId?._id
+                : product?._id
+              : product?._id
+          }`
+        )
       }
     >
       <div className="w-full h-full flex flex-col items-center justify-between py-4">
@@ -36,8 +48,7 @@ const ProductCard = ({ product }) => {
           <div className="flex flex-col items-center">
             <h2 className="text-lg font-semibold">
               {user
-                ? product?.productId?.productName ||
-                  product?.productName
+                ? product?.productId?.productName || product?.productName
                 : product?.productName}
             </h2>
             <p className="text-gray-600 mb-4">

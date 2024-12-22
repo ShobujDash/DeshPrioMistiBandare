@@ -142,6 +142,7 @@ const TodaysCalculationPage = () => {
         setProductQnt("");
         setProductPrice("");
         await getTodayEntryProduct();
+        await getStoreProduct();
       } else {
         setLoading(false);
         toast.error("কিছু ভুল হয়েছে আবার চেষ্টা করুন !");
@@ -176,6 +177,7 @@ const TodaysCalculationPage = () => {
         setProductQnt("");
         setProductPrice("");
         await getTodayExitProduct();
+        await getStoreProduct();
       } else {
         setLoading(false);
         toast.error("কিছু ভুল হয়েছে আবার চেষ্টা করুন !");

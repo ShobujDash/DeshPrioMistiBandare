@@ -2,9 +2,11 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import instance from "../axios";
 import QRCode from "../assets/QR_Code_Bkash_Antar.jpg"
+import Loading from "./Loading";
 
 
 const PaymentModal = ({ isOpen, closeModal, price, orderID }) => {
+  const [loading,setLoading] = useState(false)
   const [inputData, setInputData] = useState({
     tranNum: "",
     mobileNum: "",
@@ -21,18 +23,22 @@ const PaymentModal = ({ isOpen, closeModal, price, orderID }) => {
 
   const handlePayment = async () => {
     try {
+      setLoading(true)
       const { data } = await instance.post("/api/payment/create", {
         ...inputData,
         price,
         orderID,
       });
       if (data?.success) {
+        setLoading(false)
         toast.success(data?.message);
         closeModal();
       } else {
+        setLoading(false)
         toast.error(data?.message);
       }
     } catch (error) {
+      setLoading(false)
       console.log(error);
     }
   };
@@ -68,8 +74,8 @@ const PaymentModal = ({ isOpen, closeModal, price, orderID }) => {
                 </div>
 
                 <p className="text-gray-700 leading-relaxed">
-                  টোটাল <strong> {price} </strong> টাকা এই নাম্বার পেমেন্ট করুন
-                  । <br /> <strong> বিকাশ পার্সোনালঃ 01827026482 </strong>।{" "}
+                  টোটাল <strong> {price} </strong> টাকা এই নাম্বার সেন্ড মানি
+                  করুন । <br /> <strong> বিকাশ পার্সোনালঃ 01786153786 </strong>।{" "}
                   <br />
                   তারপর আপনার ইমেলের মাধ্যমে সঠিক নির্দেশনা পাঠানো হবে।
                 </p>
@@ -115,8 +121,9 @@ const PaymentModal = ({ isOpen, closeModal, price, orderID }) => {
                 <button
                   onClick={handlePayment}
                   className="w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md mt-3"
+                  disabled={loading}
                 >
-                  কনফার্ম
+                  {loading ? <Loading /> : "কনফার্ম"}
                 </button>
               </div>
             </div>
