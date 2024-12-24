@@ -1,13 +1,12 @@
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import instance from "../../axios";
 import { useAuthContext } from "../../Context/AuthContex";
 import Loading from "../Loading";
-import "./login.css";
-import instance from "../../axios";
 import OAuth from "../OAuth";
+import "./login.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,8 +19,8 @@ const Login = () => {
   });
 
   const [btnLoader, setBtnLoader] = useState(false);
-
   const [addActiveClass, setAddActiveClass] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,6 +28,10 @@ const Login = () => {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible((prev) => !prev);
   };
 
   // login handeler
@@ -49,7 +52,7 @@ const Login = () => {
           );
 
           if (profileData?.success) {
-              setUser(profileData.data);
+            setUser(profileData.data);
             if (profileData?.data?.isAdmin) {
               navigate("/admin"); // অ্যাডমিন পৃষ্ঠায় নেভিগেট করুন
             } else {
@@ -73,8 +76,6 @@ const Login = () => {
     }
   };
 
-
-
   // register handler
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
@@ -84,8 +85,27 @@ const Login = () => {
       const { data } = await instance.post("/api/user/register", formData);
 
       if (data?.success) {
-        toast.success("Register Successfull.");
-        navigate("/");
+        toast.success("লগইন সফল।");
+        try {
+          // প্রোফাইল ডেটা নিয়ে নেভিগেশনের জন্য চেক করুন
+          const { data: profileData } = await instance.get(
+            "/api/user/getProfile"
+          );
+
+          if (profileData?.success) {
+            setUser(profileData?.data);
+            if (profileData?.data?.isAdmin) {
+              navigate("/admin"); // অ্যাডমিন পৃষ্ঠায় নেভিগেট করুন
+            } else {
+              navigate("/"); // হোম পৃষ্ঠায় নেভিগেট করুন
+            }
+          } else {
+            toast.error("প্রোফাইল ডেটা আনতে ব্যর্থ।");
+          }
+        } catch (profileError) {
+          console.error("প্রোফাইল ফেচিং ত্রুটি:", profileError);
+          toast.error("প্রোফাইল ফেচিং ত্রুটি। আবার চেষ্টা করুন।");
+        }
         setBtnLoader(false);
       } else {
         toast.error(data?.message);
@@ -120,11 +140,17 @@ const Login = () => {
                 value={formData.password}
                 onChange={handleChange}
                 name="password"
-                type="password"
+                type={passwordVisible ? "text" : "password"}
                 placeholder="Password"
                 required
               />
-              <i className="bx bxs-lock-open-alt"></i>
+              <i
+                className={`bx ${
+                  passwordVisible ? "bxs-low-vision" : "bxs-lock-open-alt"
+                }`}
+                onClick={togglePasswordVisibility}
+                style={{ cursor: "pointer" }}
+              ></i>
             </div>
             <div className="forgot-link">
               <a href="">Forgot password?</a>
@@ -161,7 +187,7 @@ const Login = () => {
                 </div>
               </a>
             </div> */}
-            <OAuth/>
+            <OAuth />
           </form>
         </div>
 
@@ -196,11 +222,17 @@ const Login = () => {
                 value={formData.password}
                 onChange={handleChange}
                 name="password"
-                type="password"
+                type={passwordVisible ? "text" : "password"}
                 placeholder="Password"
                 required
               />
-              <i className="bx bxs-lock-open-alt"></i>
+              <i
+                className={`bx ${
+                  passwordVisible ? "bxs-low-vision" : "bxs-lock-open-alt"
+                }`}
+                onClick={togglePasswordVisibility}
+                style={{ cursor: "pointer" }}
+              ></i>
             </div>
             <div className="forgot-link">
               <a href="">Forgot password?</a>
@@ -236,7 +268,7 @@ const Login = () => {
                 </div>
               </a>
             </div> */}
-            <OAuth/>
+            <OAuth />
           </form>
         </div>
 

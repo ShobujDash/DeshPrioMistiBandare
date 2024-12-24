@@ -28,7 +28,7 @@ export const heroData = [
   {
     id: 4,
     name: "ছানার মিস্টি",
-    decription: "সুস্বাদু ছানার মিস্টি",
+    decription: "সুস্বাদু রসমালাই",
     price: "700",
     imageSrc: c1,
   },
